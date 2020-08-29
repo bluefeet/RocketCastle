@@ -40,7 +40,7 @@ body {
   grid-row: footer-top / footer-bottom;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 820px) {
   body {
     grid-template-columns: [content-left] auto [content-right];
   }
@@ -92,8 +92,7 @@ body {
 }
 
 #actions {
-  padding-left: 1rem;
-  padding-bottom: 1rem;
+  padding: 0 1rem 1rem 1rem;
 }
 
 #actions button {
@@ -106,10 +105,9 @@ body {
   text-align: center;
   font-size: 0.7rem;
   text-align: right;
-  color: grey;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 820px) {
   #title {
     border-bottom: 0;
     text-align: center;

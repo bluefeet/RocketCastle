@@ -8,5 +8,18 @@ body {
 }
 
 #detail {
-  border-color: rgb(87, 121, 87);
+  border-color: rgb(87, 121, 121);
+}
+
+#footer {
+  color: #ddd;
+}
+
+#actions {
+  align-items: stretch;
+}
+
+button {
+  border: solid 2px rgb(194, 120, 136);
+  background-color: rgb(240, 201, 149);
 }
