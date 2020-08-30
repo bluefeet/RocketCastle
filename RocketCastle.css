@@ -12,8 +12,8 @@ body {
   grid-column: content-left / content-right;
   grid-row: content-top / content-bottom;
   display: grid;
-  grid-template-columns: [detail-left footer-left] 50% [detail-right title-left actions-left] 50% [title-right actions-right footer-right];
-  grid-template-rows: [title-top detail-top] auto [title-bottom actions-top] auto [detail-bottom actions-bottom footer-top] auto [footer-bottom];
+  grid-template-columns: [detail-left footer-left] 50% [detail-right title-left options-left] 50% [title-right options-right footer-right];
+  grid-template-rows: [title-top detail-top] auto [title-bottom options-top] auto [detail-bottom options-bottom footer-top] auto [footer-bottom];
 }
 
 #title {
@@ -26,9 +26,9 @@ body {
   grid-row: detail-top / detail-bottom;
 }
 
-#actions {
-  grid-column: actions-left / actions-right;
-  grid-row: actions-top / actions-bottom;
+#options {
+  grid-column: options-left / options-right;
+  grid-row: options-top / options-bottom;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -46,11 +46,11 @@ body {
   }
 
   #content {
-    grid-template-columns: [title-left detail-left actions-left footer-left] auto [title-right detail-right actions-right footer-right];
-    grid-template-rows: [title-top] auto [title-bottom detail-top] auto [detail-bottom actions-top] auto [actions-bottom footer-top] auto [footer-bottom];
+    grid-template-columns: [title-left detail-left options-left footer-left] auto [title-right detail-right options-right footer-right];
+    grid-template-rows: [title-top] auto [title-bottom detail-top] auto [detail-bottom options-top] auto [options-bottom footer-top] auto [footer-bottom];
   }
 
-  #actions {
+  #options {
     align-items: stretch;
   }
 }
@@ -91,11 +91,11 @@ body {
   line-height: 1.1rem;
 }
 
-#actions {
+#options {
   padding: 0 1rem 1rem 1rem;
 }
 
-#actions button {
+#options button {
   margin-top: 1rem;
   padding: 5px;
 }
@@ -118,11 +118,11 @@ body {
     margin: 0 1rem;
   }
 
-  #actions {
+  #options {
     padding: 0 2rem 1rem 2rem;
   }
 
-  #actions button {
+  #options button {
     text-align: center;
   }
 
