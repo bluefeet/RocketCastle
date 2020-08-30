@@ -1,6 +1,6 @@
 # 🚀🏰
 
-Welcome to Rocket Castle.  We're building a platform for people to create and play interactive  text-based games and stories.
+Welcome to Rocket Castle: a platform for people to create and play interactive text-based games and stories.
 
 ## How to Create a Game
 
@@ -17,10 +17,10 @@ A room is a plain JavaScript object which must have several properties set:
 
 ```js
 {
-  // A short string, usually title cased.
+  // Short text, usually title cased.
   "title": "Title of Example",
 
-  // A detailed description of the room. Newlines (`\n`) in the string will be rendered.
+  // Longer text description of the room.
   "detail": "This is a place.\n\nWhat would you like to do?",
 
   // An array of option arrays which the user may select from.
@@ -30,7 +30,7 @@ A room is a plain JavaScript object which must have several properties set:
       // The message to display to the user.
       "Click here to say hi!",
 
-      // Which macro to trigger when this option is selected by the player.
+      // Which macro to trigger when this option is selected.
       "tell",
 
       // And then any macro arguments.
