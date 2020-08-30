@@ -102,11 +102,11 @@ Any macro argument can itself be a macro.  So, for example if you wanted tell th
 - Better home page game.
 - Better grungle game with more examples.
 - Declare design principals, coding practices, git hygiene.
-- More community. Social networking, wiki, discord?
-- Declare MIT license.
+- Community: Social networking, wiki, discord?
+- Declare MIT (?) license.
 - Define rules of conduct and safe content.
 - Figure out how licenses should be assigned to an author's work.  Likely will just require that all content (including external) is licensed under a creative commons license.
-- Move all worlds to JSON files.  This will make accepting pull requests easier as JSON doesn't have executable code to watch out for.
+- Move all worlds to JSON (or YAML? mmm) files.  This will make accepting pull requests easier as JSON doesn't have executable code to watch out for.
 - Plugin system for things like adding mechanics (health, hunger, sanity, time).
 - More flexibility in the DOM and what information is shown where and how.
 - Unit tests.
@@ -115,3 +115,4 @@ Any macro argument can itself be a macro.  So, for example if you wanted tell th
 - Add an `ask` macro for asking the user to pick from a set of options. Probably in a modal dialogue. This will allow for, for example, having a complex conversation with an NPC. Without this the same can be accomplished with multiple rooms.
 - Possibly expand the `format` macro to support named values rather than positional.  Also, supporting actual formatting of the value would be nice (`%.02d` for example, etc).
 - Change the `tell` macro to not use `alert()`. Make more pretty.
+- Fix "pull down to refresh" on my phone.
