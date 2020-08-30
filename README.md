@@ -86,6 +86,7 @@ Check out the [example Grungle game](https://rocketcastle.com/grungle/) (see the
 | op | `["op", left, ">", right]` | Returns the result of applying the operator to the left and right operands. Supported operators are `+`, `-`, `/`, `*`, `%`, `**`, `<`, `>`, `<=`, `>=`, `==`, `!=`, `||`, and `&&`. |
 | pick | `["pick", thing1, thing2]` | Takes any number of arguments, randomly returns one of them. |
 | reset | `["reset"]` | Resets the game by restoring the world state to the initial state. |
+| roll | `["roll", dice, sides]` | Returns the results of rolling the dice. |
 | set | `["set", key, value]` | Sets the key to the value within the world state. |
 | tell | `["tell", message]` | Displays a message for the player to read. |
 | toggle | `["toggle", key]` | Switches the key from `true` to `false`, and back. |

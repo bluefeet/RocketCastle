@@ -82,6 +82,16 @@ const rcMacros = {
     return this.runMacro( macro );
   },
 
+  roll: function (dice, sides) {
+    dice = this.runMacro( dice );
+    sides = this.runMacro( sides );
+    let total = 0;
+    while (dice--) {
+      total += Math.floor( Math.random() * sides ) + 1;
+    }
+    return total;
+  },
+
   set: function (key, value) {
     key = this.runMacro( key );
     value = this.runMacro( value );
