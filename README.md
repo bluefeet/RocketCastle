@@ -93,7 +93,7 @@ Check out the [example Grungle game](https://rocketcastle.com/grungle/) (see the
 Any macro argument can itself be a macro.  So, for example if you wanted tell the player how many apples they have you'd pass the `message` argument to `tell` like so:
 
 ```js
-[ "tell", ["format","You have %s apples!",["get","apple"]] ]
+[ "tell", ["format","You have {0} apples!",["get","apple"]] ]
 ```
 
 ## TODO
