@@ -115,7 +115,8 @@ Any macro argument can itself be a macro.  So, for example if you wanted tell th
 - Unit tests.
 - Probably publish the js to npm.
 - Run games from the command line.
-- Add an `ask` macro for asking the user to pick from a set of options. Probably in a modal dialogue. This will allow for, for example, having a complex conversation with an NPC. Without this the same can be accomplished with multiple rooms.
+- Add an `ask` macro for asking the user to pick from a set of options. Probably in a modal dialogue. This will allow for, for example, having a complex conversation with an NPC.
 - Possibly expand the `format` macro to support named values rather than positional.  Also, supporting actual formatting of the value would be nice (`%.02d` for example, etc).
 - Change the `tell` macro to not use `alert()`. Make more pretty.
 - Fix "pull down to refresh" on my phone.
+- Version assets so changes don't break current users in weird ways.
