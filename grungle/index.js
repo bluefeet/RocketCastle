@@ -27,29 +27,9 @@ rooms.cliff = {
 
 rooms.forest = {
   title: "Grungle's Forest",
-  detail: 'Great old oaks intertwine their massive branches above your head, causing beams of light to guide your steps down the path.\n\nSuddenly you hear a crunch and a slow rickety, deep, breath from somewhere deeper in the forest.',
+  detail: 'Great old oaks intertwine their massive branches above your head, causing beams of light to guide your steps down the path.\n\nSuddenly you hear a crunch and a slow.. rickety, deep, breath from somewhere deeper in the forest...\n\nTO BE CONTINUED',
   options: [
-    ['Hike to the valley.', 'changeRoom', 'lake'],
-    ['Head towards the mountain.', 'changeRoom', 'caveEntrance' ],
-  ],
-};
-
-rooms.meadow = {
-  title: 'Butterfly Meadow',
-  detail: 'A vast meadow of brilliant flowers and flippity butterflies. You can see a trail to the south-east, or to the west is a rocky cliff.',
-  options: [
-    ['Follow the trail.', 'changeRoom', 'lake'],
-    ['Go to the cliff.', 'changeRoom', 'caveEntrance'],
-    ['Pick an 🍏.', ['takeItem', 'apple'], ['say', 'You took an apple.']],
-  ],
-};
-
-rooms.lake = {
-  title: 'Valley of the Lake',
-  detail: 'A desolate valley of rocks and shrubs surrounds you, and in front of you is a deep aquamarine lake of unknown depths.',
-  options: [
-    ['Go to the forest in the south-west.', 'changeRoom', 'forest'],
-    ['Go to the meadow in the north-west.', 'changeRoom', 'meadow'],
+    ['Restart game.', 'restartGame']
   ],
 };
 
