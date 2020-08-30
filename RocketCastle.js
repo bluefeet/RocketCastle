@@ -1,70 +1,115 @@
 'use strict';
 
-const rcActions = {
-  restartGame: function () {
-    this.reset();
-  },
+const rcMacros = {
 
-  doAll: function (...actions) {
-    const results = [];
-    for (const action of actions) {
-      results.push( this.runAction( action ) );
-    }
-    return results;
-  },
-  
-  doIf: function (checkAction, trueAction, falseAction) {
-    if (this.runAction( checkAction )) {
-      return this.runAction( trueAction );
-    }
-    return this.runAction( falseAction );
-  },
-  
-  doRandom: function (...actions) {
-    const action = actions[
-      Math.floor( Math.random() * actions.length )
-    ];
-    return this.runAction( action );
-  },
-  
-  changeRoom: function (roomKey) {
+  move: function (roomKey) {
+    roomKey = this.runMacro( roomKey );
     if (!this.rooms[ roomKey ]) { throw `Unknown room "${roomKey}"` }
     this.state.room = roomKey;
   },
   
-  say: function (message) {
-    alert( message );
+  reset: function () {
+    this.reset();
+  },
+
+  tell: function (message) {
+    alert( this.runMacro( message ) );
+  },
+
+  do: function (...macros) {
+    const results = [];
+    for (const macro of macros) {
+      results.push( this.runMacro( macro ) );
+    }
+    return results;
   },
   
-  setState: function (key, value) {
+  if: function (check, ifTrue, ifFalse) {
+    if (this.runMacro( check )) {
+      return this.runMacro( ifTrue );
+    }
+    return this.runMacro( ifFalse );
+  },
+
+  op: function (left, op, right) {
+    left = this.runMacro( left );
+    right = this.runMacro( right );
+
+    switch (op) {
+      case '+':
+        return left + right;
+      case '-':
+        return left - right;
+      case '/':
+        return left / right;
+      case '*':
+        return left * right;
+      case '%':
+        return left % right;
+      case '**':
+        return left ** right;
+      case '<':
+        return left < right;
+      case '>':
+        return left > right;
+      case '<=':
+        return left <= right;
+      case '>=':
+        return left >= right;
+      case '=':
+        return left == right;
+      case '!=':
+        return left != right;
+      default:
+        throw `Unknown operator "${op}"`;
+    }
+  },
+
+  random: function (...macros) {
+    const macro = macros[
+      Math.floor( Math.random() * macros.length )
+    ];
+    return this.runMacro( macro );
+  },
+
+  set: function (key, value) {
+    key = this.runMacro( key );
+    value = this.runMacro( value );
     this.state[ key ] = value;
   },
   
-  getState: function (key) {
+  get: function (key) {
+    key = this.runMacro( key );
     return this.state[ key ];
   },
+
+  has: function (key) {
+    key = this.runMacro( key );
+    return key in this.state;
+  },
   
-  clearState: function (key) {
+  clear: function (key) {
+    key = this.runMacro( key );
     delete this.state[ key ];
-  },
+  },  
   
-  hasState: function (key) {
-    return 'key' in this.state;
-  },
-  
-  flagState: function (key) {
+  flag: function (key) {
+    key = this.runMacro( key );
     this.state[ key ] = true;
   },
   
-  toggleState: function (key) {
+  toggle: function (key) {
+    key = this.runMacro( key );
     this.state[ key ] = !this.state[ key ];
   },
   
-  incState: function (key) {
+  inc: function (key) {
+    key = this.runMacro( key );
     this.state[ key ] = (this.state[ key ] || 0) + 1;
   },
   
-  decState: function (key) {
+  dec: function (key) {
+    key = this.runMacro( key );
     this.state[ key ] = (this.state[ key ] || 0) - 1;
   },
 };
@@ -81,17 +126,18 @@ class RocketCastle {
     this.refresh();
   }
 
-  runAction (action) {
-    if (action.constructor !== Array) { return action }
+  runMacro (macro) {
+    if (!macro) { return macro }
+    if (macro.constructor !== Array) { return macro }
 
-    let [ name, ...args ] = action;
+    let [ name, ...args ] = macro;
     if (!name) {
-      console.log(action);
-      throw 'Action missing name argument';
+      console.log(macro);
+      throw 'Macro missing name argument';
     }
 
-    let callback = rcActions[ name ];
-    if (!callback) { throw `Unknown action "${name}"` }
+    let callback = rcMacros[ name ];
+    if (!callback) { throw `Unknown macro "${name}"` }
 
     return callback.call( this, ...args );
   }
@@ -144,10 +190,10 @@ class RocketCastle {
   
     // Create a button for each viewable option.
     for (const option of room.options) {
-      let [ message, ...action ] = option;
+      let [ message, ...macro ] = option;
 
       if (message.constructor === Array) {
-        message = this.runAction( message );
+        message = this.runMacro( message );
       }
 
       if (!message) { continue }
@@ -157,7 +203,7 @@ class RocketCastle {
   
       element.addEventListener(
         'click', ()=>{
-          this.runAction( action );
+          this.runMacro( macro );
           this.refresh();
         }
       );

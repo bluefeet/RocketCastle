@@ -11,6 +11,90 @@ Welcome to Rocket Castle.  We're building a platform for people to create and pl
 5. Commit and push your work to GitHub.
 6. Open a pull request to have your game deployed on [rocketcastle.com](https://rocketcastle.com)!
 
+## Anatomy of a Room
+
+A room is a plain JavaScript object which must have several properties set:
+
+```js
+{
+  // A short string, usually title cased.
+  "title": "Title of Example",
+
+  // A detailed description of the room. Newlines (`\n`) in the string will be rendered.
+  "detail": "This is a place.\n\nWhat would you like to do?",
+
+  // An array of option arrays which the user may select from.
+  "options": [
+    // Each option is itself an array.
+    [
+      // The message to display to the user.
+      "Click here to say hi!",
+
+      // Which macro to trigger when this option is selected by the player.
+      "say",
+
+      // And then any macro arguments.
+      "hi!"
+    ]
+  ]
+}
+```
+
+## Conditionally Displayed Options
+
+An option's message may be a macro array instead of a string.  If it is, then the macro will be run and its return value used as the message.  If the return message is [falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy) then the option will not be shown.
+
+Here's a set of options which allow the player to pick and eat apples:
+
+```js
+"options": [
+  // Increases the number of apples by 1 when chosen.
+  ["Pick an apple.", "inc", "apple"],
+  // Decrease the number of apples by 1 when chosen.
+  ["Eat an apple.", "dec", "apple"]
+]
+```
+
+The problem here is that if all you do is eat apples then you're going to have negative apples and that makes no sense.  We want the `"Eat an apple."` option to be shown only if the player has at least 1 apple.  This can be accomplished by replacing the message with an `if` macro:
+
+```js
+"options": [
+  ["Pick an apple.", "inc", "apple"],
+  // This option only shows if "apple" is truthy.
+  [["if",["get","apple"],"Eat an apple."], "dec", "apple"]
+]
+```
+
+Check out the [example Grungle game](https://rocketcastle.com/grungle/) (see the room definition [here](https://github.com/bluefeet/RocketCastle/blob/master/grungle/index.js)) for a slightly more complex example of this apple picking business.
+
+## Macros
+
+| Name | Example | Description |
+| --- | --- | --- |
+| clear | `["clear", key]` | Remove the key from the world state. |
+| dec | `["dec", key]` | Decreases the value of the key by `1`. |
+| do | `["do", macro1, macro2]` | Runs all of the specified macros. |
+| flag | `["flag", key]` | Sets the key to `true`. |
+| get | `["get", key]` | Returns the value for the key. |
+| has | `["has", key]` | Return `true` or `false` depending on the existence of the key. |
+| if | `["if", check, ifTrue, ifFalse]` | Calls `check` and then, depending on the result, returns either `ifTrue` or `ifFalse`. |
+| inc | `["inc", key]` | Increases the value of the key by `1`. |
+| move | `["move", roomKey]` | Moves the player to the specified room. |
+| op | `["op", left, ">", right]` | Returns the result of applying the operator to the left and right operands. Supported operators are `+`, `-`, `/`, `*`, `%`, `**`, `<`, `>`, `<=`, `>=`, `=`, and `!=`. |
+| random | `["random", thing1, thing2]` | Randomly picks a single thing from the specified list and returns it. |
+| reset | `["reset"]` | Resets the game by restoring the world state to the initial state. |
+| set | `["set", key, value]` | Sets the key to the value within the world state. |
+| tell | `["tell", message]` | Displays a message for the player to read. |
+| toggle | `["toggle", key]` | Switches the key from `true` to `false`, and back. |
+
+## Macro Arguments
+
+Any macro argument can itself be a macro.  So, for example if you wanted tell the player how many apples they have you'd pass the `message` argument to `tell` like so:
+
+```js
+[ "tell", ["format","You have %s apples!",["get","apple"]] ]
+```
+
 ## TODO
 
 - Documentation!
@@ -25,3 +109,8 @@ Welcome to Rocket Castle.  We're building a platform for people to create and pl
 - Plugin system for things like adding mechanics (health, hunger, sanity, time).
 - More flexibility in the DOM and what information is shown where and how.
 - Unit tests.
+- Probably publish the js to npm.
+- Run games from the command line.
+- Add an `ask` macro for asking the user to pick from a set of options. Probably in a modal dialogue. This will allow for, for example, having a complex conversation with an NPC. Without this the same can be accomplished with multiple rooms.
+- Add a printf-style templating macro, maybe call it `template`.  `["template","Hello %s!",["get","planetName"]]`?
+- Change the `tell` macro to not use `alert()`. Make more pretty.

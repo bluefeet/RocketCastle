@@ -1,10 +1,10 @@
 'use strict';
 
-rcActions.loadWorld = function (worldKey) {
+rcMacros.loadWorld = function (worldKey) {
   document.location = `${worldKey}/`;
 };
 
-rcActions.loadUrl = function (url) {
+rcMacros.loadUrl = function (url) {
   document.location = url;
 };
 
@@ -18,8 +18,8 @@ rooms.home = {
   title: 'Rocket Castle',
   detail: 'Welcome to 🚀🏰!\n\nWhat would you like to do?',
   options: [
-    ['Explore.', 'changeRoom', 'experience'],
-    ['Create.', 'changeRoom', 'create'],
+    ['Explore.', 'move', 'experience'],
+    ['Create.', 'move', 'create'],
   ],
 };
 
@@ -28,7 +28,7 @@ rooms.experience = {
   detail: 'An adventure awaits...',
   options: [
     ['Grungle', 'loadWorld', 'grungle'],
-    ['I changed my mind, go back I say!', 'changeRoom', 'home'],
+    ['I changed my mind, go back I say!', 'move', 'home'],
   ],
 };
 
@@ -37,7 +37,7 @@ rooms.create = {
   detail: 'Want to create your own Rocket Castle game?',
   options: [
     ['Yes! Take me to GitHub.', 'loadUrl', 'https://github.com/bluefeet/RocketCastle'],
-    ['No thanks.', 'changeRoom', 'home'],
+    ['No thanks.', 'move', 'home'],
   ],
 }
 
