@@ -4,12 +4,12 @@ Welcome to Rocket Castle.  We're building a platform for people to create and pl
 
 ## How to Create a Game
 
-1. Start by creating a GitHub fork of the [RocketCastle repository](https://github.com/bluefeet/RocketCastle). You will be making all of your code changes in this fork and submitting them back to the main repository as pull requests.
+1. Start by creating a GitHub fork of the [RocketCastle repository](https://github.com/bluefeet/RocketCastle). You will be making all of your code changes in this fork and submitting them back to the main repository as a pull request.
 2. Use the `grungle` game as a template for your new game by copying it and modifying the `yourgame/index.html`, `yourgame/index.js`, and `yourgame/index.css` to fit.  The `yourgame` bit should be a lowercase, alphanumeric, dash-separated, string.
 3. Edit the root `index.html` to include your game in the `experience` room.
 4. Edit `_redirects` and copy the `grungle` lines and modify to fit for `yourgame`.
 5. Commit and push your work to GitHub.
-6. Open a pull request to have your game deployed on [rocketcastle.com](https://rocketcastle.com)!
+6. Open a pull request and, pending a positive review, your game will be deployed on [rocketcastle.com](https://rocketcastle.com)!
 
 ## Anatomy of a Room
 
@@ -31,7 +31,7 @@ A room is a plain JavaScript object which must have several properties set:
       "Click here to say hi!",
 
       // Which macro to trigger when this option is selected by the player.
-      "say",
+      "tell",
 
       // And then any macro arguments.
       "hi!"
@@ -75,12 +75,13 @@ Check out the [example Grungle game](https://rocketcastle.com/grungle/) (see the
 | dec | `["dec", key]` | Decreases the value of the key by `1`. |
 | do | `["do", macro1, macro2]` | Runs all of the specified macros. |
 | flag | `["flag", key]` | Sets the key to `true`. |
+| format | `["format", "thing is {0}", thing]` | Interpolate values into a string. |
 | get | `["get", key]` | Returns the value for the key. |
 | has | `["has", key]` | Return `true` or `false` depending on the existence of the key. |
 | if | `["if", check, ifTrue, ifFalse]` | Calls `check` and then, depending on the result, returns either `ifTrue` or `ifFalse`. |
 | inc | `["inc", key]` | Increases the value of the key by `1`. |
 | move | `["move", roomKey]` | Moves the player to the specified room. |
-| op | `["op", left, ">", right]` | Returns the result of applying the operator to the left and right operands. Supported operators are `+`, `-`, `/`, `*`, `%`, `**`, `<`, `>`, `<=`, `>=`, `=`, and `!=`. |
+| op | `["op", left, ">", right]` | Returns the result of applying the operator to the left and right operands. Supported operators are `+`, `-`, `/`, `*`, `%`, `**`, `<`, `>`, `<=`, `>=`, `==`, `!=`, `||`, and `&&`. |
 | random | `["random", thing1, thing2]` | Randomly picks a single thing from the specified list and returns it. |
 | reset | `["reset"]` | Resets the game by restoring the world state to the initial state. |
 | set | `["set", key, value]` | Sets the key to the value within the world state. |
@@ -112,5 +113,5 @@ Any macro argument can itself be a macro.  So, for example if you wanted tell th
 - Probably publish the js to npm.
 - Run games from the command line.
 - Add an `ask` macro for asking the user to pick from a set of options. Probably in a modal dialogue. This will allow for, for example, having a complex conversation with an NPC. Without this the same can be accomplished with multiple rooms.
-- Add a printf-style templating macro, maybe call it `template`.  `["template","Hello %s!",["get","planetName"]]`?
+- Possibly expand the `format` macro to support named values rather than positional.  Also, supporting actual formatting of the value would be nice (`%.02d` for example, etc).
 - Change the `tell` macro to not use `alert()`. Make more pretty.

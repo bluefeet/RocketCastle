@@ -16,6 +16,12 @@ const rcMacros = {
     alert( this.runMacro( message ) );
   },
 
+  format: function (message, ...values) {
+    message = this.runMacro( message );
+    values = values.map( value => this.runMacro(value) );
+    return message.replace( /\{(\d+)\}/, (match,index) => values[index] );
+  },
+
   do: function (...macros) {
     const results = [];
     for (const macro of macros) {
@@ -56,10 +62,14 @@ const rcMacros = {
         return left <= right;
       case '>=':
         return left >= right;
-      case '=':
+      case '==':
         return left == right;
       case '!=':
         return left != right;
+      case '||':
+        return left || right;
+      case '&&':
+        return left && right;
       default:
         throw `Unknown operator "${op}"`;
     }

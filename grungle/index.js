@@ -31,7 +31,7 @@ rooms.forest = {
   options: [
     [["if",["op",["get","apple"],">",0],"Eat an apple."], "dec", "apple"],
     ["Pick an apple.", "inc", "apple"],
-    ["How many apples do I have?", "tell", ["get", "apple"]],
+    ["How many apples do I have?", "tell", ["format","You have {0} apples!",["get", "apple"]]],
   ],
 };
 
