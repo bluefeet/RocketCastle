@@ -75,7 +75,7 @@ const rcMacros = {
     }
   },
 
-  random: function (...macros) {
+  pick: function (...macros) {
     const macro = macros[
       Math.floor( Math.random() * macros.length )
     ];

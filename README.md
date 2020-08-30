@@ -84,7 +84,7 @@ Check out the [example Grungle game](https://rocketcastle.com/grungle/) (see the
 | inc | `["inc", key]` | Increases the value of the key by `1`. |
 | move | `["move", roomKey]` | Moves the player to the specified room. |
 | op | `["op", left, ">", right]` | Returns the result of applying the operator to the left and right operands. Supported operators are `+`, `-`, `/`, `*`, `%`, `**`, `<`, `>`, `<=`, `>=`, `==`, `!=`, `||`, and `&&`. |
-| random | `["random", thing1, thing2]` | Randomly picks a single thing from the specified list and returns it. |
+| pick | `["pick", thing1, thing2]` | Takes any number of arguments, randomly returns one of them. |
 | reset | `["reset"]` | Resets the game by restoring the world state to the initial state. |
 | set | `["set", key, value]` | Sets the key to the value within the world state. |
 | tell | `["tell", message]` | Displays a message for the player to read. |
