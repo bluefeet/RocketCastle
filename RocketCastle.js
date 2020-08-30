@@ -185,8 +185,10 @@ class RocketCastle {
     titleElement.textContent = room.title;
   
     // Set the detail.
+    let detail = room.detail;
+    if (detail.constructor === Array) { detail = detail.join('\n\n') }
     const detailElement = document.getElementById( 'detail' );
-    detailElement.textContent = room.detail;
+    detailElement.textContent = detail;
   }
 
   refreshOptions () {

@@ -16,7 +16,10 @@ const rooms = {};
 
 rooms.home = {
   title: 'Rocket Castle',
-  detail: 'Welcome to 🚀🏰!\n\nWhat would you like to do?',
+  detail: [
+    'Welcome to 🚀🏰!',
+    'What would you like to do?',
+  ],
   options: [
     ['Explore.', 'move', 'experience'],
     ['Create.', 'move', 'create'],

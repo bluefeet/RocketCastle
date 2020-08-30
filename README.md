@@ -40,6 +40,8 @@ A room is a plain JavaScript object which must have several properties set:
 }
 ```
 
+The `detail` property may be an array rather than a string.  If it is, then the array will be joined with `\n\n` to produce the final string.
+
 ## Conditionally Displayed Options
 
 An option's message may be a macro array instead of a string.  If it is, then the macro will be run and its return value used as the message.  If the return message is [falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy) then the option will not be shown.
