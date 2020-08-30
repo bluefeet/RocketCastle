@@ -18,7 +18,7 @@ rooms.home = {
   title: 'Rocket Castle',
   detail: 'Welcome to 🚀🏰!\n\nWhat would you like to do?',
   options: [
-    ['Explore', 'changeRoom', 'experience'],
+    ['Explore.', 'changeRoom', 'experience'],
     ['Create.', 'changeRoom', 'create'],
   ],
 };
@@ -34,10 +34,10 @@ rooms.experience = {
 
 rooms.create = {
   title: 'Create!',
-  detail: 'Want to create your own Rocket Castle experience?',
+  detail: 'Want to create your own Rocket Castle game?',
   options: [
-    ['I would love to, take me to your GitHub.', 'loadUrl', 'https://github.com/bluefeet/RocketCastle'],
-    ['No thanks, I want to go back and make a different choice.', 'changeRoom', 'home'],
+    ['Yes! Take me to GitHub.', 'loadUrl', 'https://github.com/bluefeet/RocketCastle'],
+    ['No thanks.', 'changeRoom', 'home'],
   ],
 }
 
