@@ -21,14 +21,15 @@ class RocketCastle {
 
     // Normalize and store the title, details, options, and theme.
     this.title = spec.title || '';
-    this.details = spec.details || spec.detail || '';
-    if (this.details.constructor !== Array) { this.details = [ this.details ] }
-    this.details = this.details.filter( line => !!line );
+    this.details = spec.details || [];
+    this.details = this.details.filter( detail => !!detail );
     this.options = spec.options || [];
+    this.options = this.options.filter( option => !!option );
     this.theme = spec.theme;
 
     this.refreshBodyClass();
-    this.refreshContent();
+    this.refreshTitle();
+    this.refreshDetails();
     this.refreshOptions();
   }
 
@@ -50,28 +51,42 @@ class RocketCastle {
     }
   }
 
-  refreshContent () {
-    // Set the title.
+  refreshTitle () {
     const titleElement = document.getElementById( 'title' );
     titleElement.textContent = this.title;
+  }
 
-    // Set the detail.
-    const detailElement = document.getElementById( 'detail' );
-    detailElement.textContent = this.details.join( '\n\n' );
+  refreshDetails () {
+    const detailsElement = document.getElementById( 'details' );
+
+    // Clear out existing details.
+    while (detailsElement.firstChild) {
+      detailsElement.firstChild.remove();
+    }
+
+    // Create a <p> for each detail.
+    for (const detail of this.details) {
+      const element = document.createElement( 'p' );
+      element.textContent = detail;
+      detailsElement.appendChild( element );
+    }
   }
 
   refreshOptions () {
-    // Clear out any existing option buttons.
     const optionsElement = document.getElementById( 'options' );
+
+    // Clear out any existing option buttons.
     while (optionsElement.firstChild) {
       optionsElement.firstChild.remove();
     }
   
-    // Create a button for each viewable option.
+    // Create a <button> for each option.
     for (const option of this.options) {
       const [ message, callback ] = option;
 
-      const element = document.createElement( "button" );
+      const element = document.createElement( 'button' );
+      element.setAttribute( 'type', 'button' );
+      element.classList.add( 'button' );
       element.textContent = message;
 
       const me = this;

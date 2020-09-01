@@ -21,7 +21,9 @@ class OfficialSite extends RocketCastle {
   exploreRoom () {
     return {
       title: 'Explore!',
-      detail: 'An adventure awaits...',
+      details: [
+        'An adventure awaits...',
+      ],
       options: [
         [ 'Play Shipwreck.', ()=>{ this.loadUrl('shipwreck/') } ],
         [ 'I changed my mind, go back I say!', ()=>{ this.move('home') } ]
@@ -32,7 +34,9 @@ class OfficialSite extends RocketCastle {
   buildRoom () {
     return {
       title: 'Build!',
-      detail: 'Want to create your own Rocket Castle game?',
+      details: [
+        'Want to create your own Rocket Castle game?',
+      ],
       options: [
         [ 'Yes! Take me to GitHub.', ()=>{ this.loadUrl('https://github.com/bluefeet/RocketCastle') } ],
         [ 'No thanks.', ()=>{ this.move('home') } ]

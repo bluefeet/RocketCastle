@@ -67,7 +67,7 @@ class Shipwreck extends RocketCastle {
   firstRoom () {
     return {
       title: 'Shipwreck',
-      detail: 'Survive for as long as you can.',
+      details: [ 'Survive for as long as you can.' ],
       options: [ 
         [ 'Start.', ()=>{ this.move('beach') } ],
         this.backToRocketCastleOption(),
@@ -152,7 +152,7 @@ class Shipwreck extends RocketCastle {
   restRoom () {
     return {
       title: 'Rest',
-      detail: 'You spent your day conserving energy.',
+      details: [ 'You spent your day conserving energy.' ],
       options: [
         [ 'Prepare for the night.', ()=>{ this.move('prepare') } ],
       ],
@@ -252,12 +252,10 @@ class Shipwreck extends RocketCastle {
   rescueRoom () {
     return {
       title: 'Rescue',
-      detail: 'You made it!',
+      details: [ 'You made it!' ],
       options: [
         [ 'Try again.', ()=>{ this.reset() } ],
       ],
     }
   }
 }
-
-const game = new Shipwreck();
