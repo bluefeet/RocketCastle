@@ -1,0 +1,10 @@
+#legal {
+  color: #aaa;
+  font-size: 0.7rem;
+  margin: 1rem 0;
+}
+
+/* Not sure why I'm getting a focus box here. */
+.tabs a:focus {
+  outline: none;
+}

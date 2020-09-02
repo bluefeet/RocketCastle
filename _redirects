@@ -10,3 +10,6 @@ https://www.rocketcastle.com/* https://rocketcastle.com/:splat 301!
 
 /shipwreck/index.html /shipwreck/ 301!
 /shipwreck /shipwreck/ 301!
+
+/demo/index.html /demo/ 301!
+/demo /demo/ 301!

@@ -1,113 +1,50 @@
-'use strict';
+/*
+  © 2020 Aran Deltac
+  MIT License
+  https://rocketcastle.com
+*/
 
 class RocketCastle {
-  constructor () {
+  constructor (bricks) {
+    this.bricks = bricks || new SpaceBricks();
     this.reset();
   }
 
-  backToRocketCastleOption () {
-    return [ 'Back to 🚀🏰!', ()=>{ this.loadUrl('https://rocketcastle.com') } ];
+  get backToRocketCastleButton () {
+    return this.bricks.button(
+      'Back to 🚀🏰!',
+      ()=>{ this.bricks.dom.location = 'https://rocketcastle.com' },
+    );
   }
 
   reset () {
-    this.room = this.firstRoomKey || 'first';
+    this.room = 'main';
     this.player = {};
     if (this.init) { this.init() }
     this.refresh();
   }
 
   refresh () {
-    const spec = this[ `${this.room}Room` ]();
+    // Remove the current room from the DOM.
+    const containerElement = this.bricks.find( 'room-container' );
+    this.bricks.empty( containerElement );
 
-    // Normalize and store the title, details, options, and theme.
-    this.title = spec.title || '';
-    this.details = spec.details || [];
-    this.details = this.details.filter( detail => !!detail );
-    this.options = spec.options || [];
-    this.options = this.options.filter( option => !!option );
-    this.theme = spec.theme;
+    // Add the new room to the DOM.
+    const roomElement = this[ `${this.room}Room` ];
+    if (!roomElement) { throw `Unknown room "${this.room}"` }
+    containerElement.appendChild( roomElement );
 
-    this.refreshBodyClass();
-    this.refreshTitle();
-    this.refreshDetails();
-    this.refreshOptions();
-  }
-
-  refreshBodyClass () {
-    // Remove any previous room class and apply the correct one.
-    if (this.currentRoomClass) {
-      document.body.classList.remove( `room-${this.currentRoomClass}` );
-    }
-    this.currentRoomClass = this.roomKey;
-    document.body.classList.add( `room-${this.currentRoomClass}` );
-    
-    // Remove any previous theme and apply the correct one, if there is one.
-    if (this.currentRoomTheme) {
-      document.body.classList.remove( `theme-${this.currentRoomTheme}` );
-    }
-    this.currentRoomTheme = this.theme;
-    if (this.currentRoomTheme) {
-      document.body.classList.add( `theme-${this.currentRoomTheme}` );
-    }
-  }
-
-  refreshTitle () {
-    const titleElement = document.getElementById( 'title' );
-    titleElement.textContent = this.title;
-  }
-
-  refreshDetails () {
-    const detailsElement = document.getElementById( 'details' );
-
-    // Clear out existing details.
-    while (detailsElement.firstChild) {
-      detailsElement.firstChild.remove();
-    }
-
-    // Create a <p> for each detail.
-    for (const detail of this.details) {
-      const element = document.createElement( 'p' );
-      element.textContent = detail;
-      detailsElement.appendChild( element );
-    }
-  }
-
-  refreshOptions () {
-    const optionsElement = document.getElementById( 'options' );
-
-    // Clear out any existing option buttons.
-    while (optionsElement.firstChild) {
-      optionsElement.firstChild.remove();
-    }
-  
-    // Create a <button> for each option.
-    for (const option of this.options) {
-      const [ message, callback ] = option;
-
-      const element = document.createElement( 'button' );
-      element.setAttribute( 'type', 'button' );
-      element.classList.add( 'button' );
-      element.textContent = message;
-
-      const me = this;
-      element.addEventListener(
-        'click',
-        () => {
-          callback.call( me );
-          me.refresh()
-        },
-      );
-
-      optionsElement.appendChild( element );
-    }
+    // Make sure Foundation gets a chance to initialize any new elements.
+    $( this.bricks.dom ).foundation();
   }
 
   move (roomKey) {
     this.room = roomKey;
+    this.refresh();
   }
 
   loadUrl (url) {
-    document.location = url;
+    this.bricks.dom.location = url;
   }
 
   tell (...details) {

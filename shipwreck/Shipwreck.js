@@ -1,11 +1,15 @@
-'use strict';
+/*
+  © 2020 Aran Deltac
+  MIT License
+  https://rocketcastle.com
+*/
 
 class Shipwreck extends RocketCastle {
   init () {
     this.player.day = 0;
 
     // The player starts with between 2 and 4 health.
-    this.player.health = 2 + this.rand(0,2);
+    this.player.health = this.rand(2,4);
 
     // Start all resources at zero.
     this.resources.forEach( resource => this.player[resource] = 0 )
@@ -52,57 +56,59 @@ class Shipwreck extends RocketCastle {
 
   get resourceDetails () {
     const player = this.player;
-    return this.resources.map(
-      resource => player[ resource ] && `You have ${player[resource]} ${resource}.`
+    return this.resources.filter( resource => player[resource] ).map(
+      resource => `You have ${player[resource]} ${resource}.`
     );
   }
 
   get supplyDetails () {
     const player = this.player;
-    return this.supplies.map(
-      supply => player[ supply ] && `You have a ${supply}.`
+    return this.supplies.filter( supply => player[supply] ).map(
+      supply => `You have a ${supply}.`
     );
   }
 
-  firstRoom () {
-    return {
-      title: 'Shipwreck',
-      details: [ 'Survive for as long as you can.' ],
-      options: [ 
-        [ 'Start.', ()=>{ this.move('beach') } ],
-        this.backToRocketCastleOption(),
-      ]
-    }
+  get mainRoom () {
+    const b = this.bricks;
+
+    return b.div(
+      b.h1( 'Shipwreck' ),
+      b.p( 'Survive for as long as you can.' ),
+      b.buttonGroup(
+        b.button( 'Start.', ()=>{ this.move('beach') } ),
+        this.backToRocketCastleButton,
+      ),
+    );
   }
 
-  beachRoom () {
+  get beachRoom () {
     if (this.player.day === this.rescueDay) {
-      return rescueRoom();
+      return this.rescueRoom;
     }
 
-    const details = [];
-
-    const fireDetail = this.player.fire && 'Your fire has gone out.';
+    // Remove fire before collecting player details.
+    const hadFire = this.player.fire;
     delete this.player.fire;
 
-    return {
-      title: 'Beach',
+    const details = this.playerDetails;
 
-      details: [
-        'It is morning and the sun is rising.',
-        fireDetail,
-        ...this.playerDetails,
-        'What would you like to do today?',
-      ],
+    if (hadFire) { details.unshift('Your fire has gone out.') }
 
-      options: [
-        [ 'Forage.', ()=>{ this.move('forage') } ],
-        [ 'Rest.', ()=>{ this.move('rest') } ],
-      ],
-    }
+    const b = this.bricks;
+
+    return b.div(
+      b.h1( 'Beach' ),
+      b.p( 'It is morning and the sun is rising.' ),
+      ...details.map( detail => b.p(detail) ),
+      b.p( 'What would you like to do today?' ),
+      b.buttonGroup(
+        b.button( 'Forage.', ()=>{ this.move('forage') } ),
+        b.button( 'Rest.', ()=>{ this.move('rest') } ),
+      ),
+    );
   }
 
-  forageRoom () {
+  get forageRoom () {
     const player = this.player;
 
     player.health --;
@@ -120,7 +126,7 @@ class Shipwreck extends RocketCastle {
       details.push( `You found ${resource}.` );
     }
 
-    const isHurt = Math.random() <= .3;
+    const isHurt = Math.random() <= .2;
     if (isHurt) {
       details.push('You hurt yourself.');
       player.health --;
@@ -131,7 +137,7 @@ class Shipwreck extends RocketCastle {
       player.health ++;
       details.push( 'You ate some food to stay alive.' );
     }
-  
+
     if (player.health<=0) {
       player.health = 0;
       if (!isHurt) { details.push([ 'You have starved to death.' ]) }
@@ -139,43 +145,49 @@ class Shipwreck extends RocketCastle {
       options.push([ 'Try again.', ()=>{ this.reset() } ]);
     }
     else {
-      options.push([ 'Prepare for the night.', ()=>{ this.move('prepare') } ])
+      options.push([ 'Walk back to the beach.', ()=>{ this.move('dusk') } ])
     }
 
-    return {
-      title: 'Forage',
-      details: details,
-      options: options,
-    };
+    const b = this.bricks;
+
+    return b.div(
+      b.h1( 'Forage' ),
+      ...details.map( detail => b.p(detail) ),
+      b.buttonGroup(
+        ...options.map( option => b.button(...option) ),
+      ),
+    );
   }
 
-  restRoom () {
-    return {
-      title: 'Rest',
-      details: [ 'You spent your day conserving energy.' ],
-      options: [
-        [ 'Prepare for the night.', ()=>{ this.move('prepare') } ],
-      ],
-    };
+  get restRoom () {
+    const b = this.bricks;
+
+    return b.div(
+      b.h1( 'Rest' ),
+      b.p( 'You spent your day conserving energy.' ),
+      b.button( 'Prepare for the night.', ()=>{ this.move('night') } ),
+    );
   }
 
-  prepareRoom () {
+  get duskRoom () {
+    const rc = this;
     const player = this.player;
-
     const options = [];
 
     if (player.food && player.health < this.maxHealth) {
-      options.push([
-        'Eat food.',
-        ()=>{ player.food--; player.health++ },
-      ]);
+      options.push([ 'Eat food.', ()=>{
+        player.food--;
+        player.health++;
+        rc.refresh();
+      }]);
     }
 
     if (player.wood && !player.fire) {
       options.push([ 'Make fire.', ()=>{
         player.wood--;
         player.fire = true;
-      } ]);
+        rc.refresh();
+      }]);
     }
 
     if (player.wood && player.stone && !player.spear) {
@@ -183,7 +195,8 @@ class Shipwreck extends RocketCastle {
         player.wood--;
         player.stone--;
         player.spear = true;
-      } ]);
+        rc.refresh();
+      }]);
     }
 
     if (player.wood && player.fiber && !player.basket) {
@@ -191,23 +204,26 @@ class Shipwreck extends RocketCastle {
         player.wood--;
         player.fiber--;
         player.basket = true;
-      } ]);
+        rc.refresh();
+      }]);
     }
 
     options.push([ 'Go to sleep.', ()=>{ this.move('night') } ]);
 
-    return {
-      title: 'Prepare',
-      details: [
-        'Unexpected things happen at night.',
-        ...this.playerDetails,
-        'What would you like to do?',
-      ],
-      options: options,
-    }
+    const b = this.bricks;
+
+    return b.div(
+      b.h1( 'Dusk' ),
+      b.p( 'Unexpected things happen at night.' ),
+      ...this.playerDetails.map( detail => b.p(detail) ),
+      b.p( 'What would you like to do?' ),
+      b.buttonGroup(
+        ...options.map( option => b.button(...option) ),
+      ),
+    );
   }
 
-  nightRoom () {
+  get nightRoom () {
     const player = this.player;
 
     const details = [];
@@ -216,13 +232,13 @@ class Shipwreck extends RocketCastle {
     const chance = Math.random();
 
     if (chance <= .5) {
-      details.push('You awaken to the sound of wild animals attacking!')
+      details.push('You awaken to the sound of wild animals attacking!');
 
       if (player.fire) {
         details.push('But the fire scared them away!');
       }
       else if (player.spear) {
-        details.push('But you protected yourself with your spear!')
+        details.push('But you protected yourself with your spear!');
       }
       else {
         player.health --;
@@ -230,7 +246,7 @@ class Shipwreck extends RocketCastle {
       }
     }
     else {
-      details.push('You awaken... to the sound of waves.')
+      details.push('You awaken... to the sound of waves.');
     }
 
     if (player.health<=0) {
@@ -239,23 +255,27 @@ class Shipwreck extends RocketCastle {
       options.push([ 'Try again.', ()=>{ this.reset() } ]);
     }
     else {
-      options.push([ 'Go back to sleep.', ()=>{ this.player.day++; this.move('beach') } ])
+      options.push([ 'Go back to sleep.', ()=>{ this.player.day++; this.move('beach') } ]);
     }  
 
-    return {
-      title: 'Night',
-      details: details,
-      options: options,
-    }
+    const b = this.bricks;
+
+    return b.div(
+      b.h1( 'Night' ),
+      ...details.map( detail => b.p(detail) ),
+      b.buttonGroup(
+        ...options.map( option => b.button(...option) ),
+      ),
+    );
   }
 
-  rescueRoom () {
-    return {
-      title: 'Rescue',
-      details: [ 'You made it!' ],
-      options: [
-        [ 'Try again.', ()=>{ this.reset() } ],
-      ],
-    }
+  get rescueRoom () {
+    const b = this.bricks;
+
+    return b.div(
+      b.h1( 'Rescue' ),
+      b.p( 'You made it!' ),
+      b.button( 'Try again.', ()=>{ this.reset() } ),
+    );
   }
 }
