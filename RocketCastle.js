@@ -10,18 +10,19 @@ class RocketCastle {
     this.reset();
   }
 
-  get backToRocketCastleButton () {
-    return this.bricks.button(
-      'Back to 🚀🏰!',
-      ()=>{ this.bricks.dom.location = 'https://rocketcastle.com' },
-    );
+  set room (key) {
+    this.roomKey = key;
+    this.refresh();
+  }
+
+  get room () {
+    return this.roomKey;
   }
 
   reset () {
-    this.room = 'main';
     this.player = {};
     if (this.init) { this.init() }
-    this.refresh();
+    this.room = 'main';
   }
 
   refresh () {
@@ -33,14 +34,6 @@ class RocketCastle {
     const roomElement = this[ `${this.room}Room` ];
     if (!roomElement) { throw `Unknown room "${this.room}"` }
     containerElement.appendChild( roomElement );
-
-    // Make sure Foundation gets a chance to initialize any new elements.
-    $( this.bricks.dom ).foundation();
-  }
-
-  move (roomKey) {
-    this.room = roomKey;
-    this.refresh();
   }
 
   loadUrl (url) {

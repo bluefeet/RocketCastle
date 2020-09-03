@@ -4,7 +4,8 @@
   margin: 1rem 0;
 }
 
-/* Not sure why I'm getting a focus box here. */
-.tabs a:focus {
-  outline: none;
+pre {
+  border: solid 0.0625rem #ddd;
+  background-color: #eee;
+  padding: 0.5rem;
 }

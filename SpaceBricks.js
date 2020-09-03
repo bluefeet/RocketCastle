@@ -6,7 +6,6 @@
 class SpaceBricks {
   constructor (dom) {
     this.dom = dom || window.document;
-    $( this.dom ).foundation();
   }
 
   /* Utility Methods */
@@ -46,6 +45,18 @@ class SpaceBricks {
     return this.element( 'div', ...children );
   }
 
+  img (src) {
+    const element = this.html( '<img class="img-fluid">' )
+    element.setAttribute( 'src', src );
+    return element;
+  }
+
+  thumbnail (src) {
+    const element = this.html( '<img class="img-thumbnail">' )
+    element.setAttribute( 'src', src );
+    return element;
+  }
+
   /* Typography Elements */
 
   h1 (text) {
@@ -66,40 +77,42 @@ class SpaceBricks {
     return element;
   }
 
-  divider () {
-    return this.element( 'hr' );
-  }
-
   blockquote (quote, cite) {
-    const quoteElement = this.element( 'blockquote' );
+    const quoteElement = this.html( '<blockquote class="blockquote"></blockquote>' );
     quoteElement.textContent = quote;
 
     if (cite) {
-      const citeElement = this.element( 'cite' );
+      const footerElement = this.html( '<footer class="blockquote-footer"></footer>' );
+      const citeElement = this.element('cite');
+      citeElement.setAttribute( 'title', cite );
       citeElement.textContent = cite;
-      quoteElement.appendChild( citeElement );
+      footerElement.appendChild( citeElement );
+      quoteElement.appendChild( footerElement );
     }
 
     return quoteElement;
   }
 
   code (text) {
-    const element = this.html('<code class="code-block"></code>');
-    element.textContent = text;
-    return element;
+    const preElement = this.element( 'pre' );
+    const codeElement = this.element( 'code' );
+    codeElement.textContent = text;
+    preElement.appendChild( codeElement );
+    return preElement;
   }
 
-  /* Interactive Elements */
+  /* Control Elements */
 
-  button (text, callback) {
-    const element = this.html( '<button type="button" class="button"></button>' );
+  button (type, text, callback) {
+    const element = this.html( '<button type="button" class="btn"></button>' );
+    element.classList.add( `btn-${type}` );
     element.textContent = text;
     element.addEventListener( 'click', callback );
     return element;
   }
 
   buttonGroup (...buttons) {
-    const groupElement = this.html( '<div class="button-group"></div>' );
+    const groupElement = this.html( '<div class="btn-group" role="group"></div>' );
 
     buttons.forEach( button => {
       groupElement.appendChild( button );
@@ -108,26 +121,46 @@ class SpaceBricks {
     return groupElement;
   }
 
+  /* Form Elements */
+
   input (type, label) {
-    const inputElement = this.element( 'input' );
-    inputElement.setAttribute( 'type', type );
-    if (!label) { return inputElement }
+    const id = this.uid();
+    const groupElement = this.html( '<div class="form-group"></div>' );
 
-    const labelElement = this.element( 'label' );
+    const labelElement = this.html( `<label for="${id}"></label>` );
     labelElement.textContent = label;
-    labelElement.appendChild( inputElement );
+    groupElement.appendChild( labelElement );
 
-    return labelElement;
+    const inputElement = this.html( `<input class="form-control" id="${id}">` );
+    groupElement.appendChild( inputElement );
+
+    return groupElement;    
   }
 
-  /* Layout Elements */
+  /* Container Elements */
+
+  alert (type, ...children) {
+    let element = this.html( '<div class="alert" role="alert"></div>' );
+    element.classList.add( `alert-${type}` );
+    children.forEach( child => element.appendChild(child) );
+    element.lastChild.classList.add( 'mb-0' );
+    return element;
+  }
 
   spread (...children) {
-    const gridElement = this.html( '<div class="grid-x"></div>' );
+    const gridElement = this.html( '<div class="grid-x grid-padding-x"></div>' );
 
-    const largeCols = Math.floor( 12 / children.length ) || 1;
-    const mediumCols = largeCols * 2;
-    const smallCols = largeCols * 4;
+    const l = children.length;
+
+    const fixCols = (cols)=>{
+      cols = cols || 1;
+      if (cols===5 || cols>6){ return 6 }
+      return cols; 
+    }
+
+    const largeCols = fixCols( Math.floor( 12 / children.length ) );
+    const mediumCols = fixCols( largeCols * 2 );
+    const smallCols = fixCols( mediumCols * 2 );
 
     children.forEach( child => {
       const cellElement = this.div();
@@ -142,50 +175,30 @@ class SpaceBricks {
     return gridElement;
   }
 
-  tabs (labels, ...children) {
-    if (labels.length !== children.length) {
-      throw 'The number of labels and children must be equal';
+  spread (...children) {
+    const containerElement = this.html( '<div class="container"></div>' );
+    const rowElement = this.html( '<div class="row"></div>' );
+    containerElement.appendChild( rowElement );
+
+    const l = children.length;
+
+    const fixCols = (cols)=>{
+      cols = cols || 1;
+      if (cols===5 || cols>6){ return 6 }
+      return cols; 
     }
 
-    // Create our top bar of tabs.
-    let tabsElement = this.html(
-      `<ul class="tabs" data-tabs id="${this.uid}"></ul>`
-    );
+    const lg = fixCols( Math.floor( 12 / children.length ) );
+    const md = fixCols( lg * 2 );
+    const sm = fixCols( md * 2 );
 
-    // Create the container that the tab content goes in.
-    let tabsContentElement = this.html(
-      `<div class="tabs-content" data-tabs-content="${tabsElement.id}"></div>`,
-    );
-
-    // Now add a tab for reach child, and put the child into the container.
     children.forEach( child => {
-      const id = this.uid();
-      
-      // The tab.
-      const tabElement = this.html( '<li class="tabs-title"></li>' );
-      const linkElement = this.html( `<a href="#${id}"></a>` );
-      linkElement.textContent = labels.shift();
-      tabElement.appendChild( linkElement );
-      tabsElement.appendChild( tabElement );
-      
-      // The tab content.
-      const contentElement = this.html( `<div class="tabs-panel" id="${id}"></div>` );
-      contentElement.appendChild( child );
-      tabsContentElement.appendChild( contentElement );
+      const colElement = this.html( `<div class="col-sm-${sm} col-md-${md} col-lg-${lg}"></div>` );
+      colElement.appendChild( child );
+      rowElement.appendChild( colElement );
     });
 
-    // Select the first tab.
-    tabsElement.firstChild.classList.add( 'is-active' );
-    tabsElement.firstChild.firstChild.setAttribute( 'aria-selected', 'true')
-    tabsContentElement.firstChild.classList.add( 'is-active' );
-
-    // Sew it all together.
-    let element = this.div(
-      tabsElement,
-      tabsContentElement,
-    );
-
-    return element;
+    return containerElement;
   }
 
 }

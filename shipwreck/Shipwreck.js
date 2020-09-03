@@ -75,8 +75,7 @@ class Shipwreck extends RocketCastle {
       b.h1( 'Shipwreck' ),
       b.p( 'Survive for as long as you can.' ),
       b.buttonGroup(
-        b.button( 'Start.', ()=>{ this.move('beach') } ),
-        this.backToRocketCastleButton,
+        b.button( 'link', 'Start.', ()=>{ this.room='beach' } ),
       ),
     );
   }
@@ -102,8 +101,8 @@ class Shipwreck extends RocketCastle {
       ...details.map( detail => b.p(detail) ),
       b.p( 'What would you like to do today?' ),
       b.buttonGroup(
-        b.button( 'Forage.', ()=>{ this.move('forage') } ),
-        b.button( 'Rest.', ()=>{ this.move('rest') } ),
+        b.button( 'link', 'Forage.', ()=>{ this.room='forage' } ),
+        b.button( 'link', 'Rest.', ()=>{ this.room='rest' } ),
       ),
     );
   }
@@ -145,7 +144,7 @@ class Shipwreck extends RocketCastle {
       options.push([ 'Try again.', ()=>{ this.reset() } ]);
     }
     else {
-      options.push([ 'Walk back to the beach.', ()=>{ this.move('dusk') } ])
+      options.push([ 'Walk back to the beach.', ()=>{ this.room='dusk' } ])
     }
 
     const b = this.bricks;
@@ -154,7 +153,7 @@ class Shipwreck extends RocketCastle {
       b.h1( 'Forage' ),
       ...details.map( detail => b.p(detail) ),
       b.buttonGroup(
-        ...options.map( option => b.button(...option) ),
+        ...options.map( option => b.button('link', ...option) ),
       ),
     );
   }
@@ -165,7 +164,7 @@ class Shipwreck extends RocketCastle {
     return b.div(
       b.h1( 'Rest' ),
       b.p( 'You spent your day conserving energy.' ),
-      b.button( 'Prepare for the night.', ()=>{ this.move('night') } ),
+      b.button( 'link', 'Prepare for the night.', ()=>{ this.room='dusk' } ),
     );
   }
 
@@ -208,7 +207,7 @@ class Shipwreck extends RocketCastle {
       }]);
     }
 
-    options.push([ 'Go to sleep.', ()=>{ this.move('night') } ]);
+    options.push([ 'Go to sleep.', ()=>{ this.room='night' } ]);
 
     const b = this.bricks;
 
@@ -218,7 +217,7 @@ class Shipwreck extends RocketCastle {
       ...this.playerDetails.map( detail => b.p(detail) ),
       b.p( 'What would you like to do?' ),
       b.buttonGroup(
-        ...options.map( option => b.button(...option) ),
+        ...options.map( option => b.button('link', ...option) ),
       ),
     );
   }
@@ -255,7 +254,7 @@ class Shipwreck extends RocketCastle {
       options.push([ 'Try again.', ()=>{ this.reset() } ]);
     }
     else {
-      options.push([ 'Go back to sleep.', ()=>{ this.player.day++; this.move('beach') } ]);
+      options.push([ 'Go back to sleep.', ()=>{ this.player.day++; this.room='beach' } ]);
     }  
 
     const b = this.bricks;
@@ -264,7 +263,7 @@ class Shipwreck extends RocketCastle {
       b.h1( 'Night' ),
       ...details.map( detail => b.p(detail) ),
       b.buttonGroup(
-        ...options.map( option => b.button(...option) ),
+        ...options.map( option => b.button('link', ...option) ),
       ),
     );
   }
@@ -275,7 +274,7 @@ class Shipwreck extends RocketCastle {
     return b.div(
       b.h1( 'Rescue' ),
       b.p( 'You made it!' ),
-      b.button( 'Try again.', ()=>{ this.reset() } ),
+      b.button( 'link', 'Try again.', ()=>{ this.reset() } ),
     );
   }
 }

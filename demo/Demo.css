@@ -1,6 +1,17 @@
 /* https://www.pexels.com/ */
 .demo-box {
-  border: dashed 0.2rem #57aee7;
+  border: dashed 0.2rem #7fc1ee;
   padding: 1rem;
   margin-bottom: 0.5rem; 
+}
+
+h1 {
+  padding-bottom: 0.6rem;
+  border-bottom: solid 0.6rem #999;
+}
+
+h2 {
+  padding-top: 0.9rem;
+  padding-bottom: 0.3rem;
+  border-bottom: solid 0.3rem #ddd;
 }
