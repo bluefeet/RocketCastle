@@ -60,26 +60,22 @@ class Demo extends RocketCastle {
 
       // buttonGroup
       b.h2( 'buttonGroup' ),
-      b.code( `b.button('primary', 'Primary', ()=>{ })
-b.button('secondary', 'Secondary', ()=>{ })
-b.button('success', 'Success', ()=>{ })
-b.button('danger', 'Danger', ()=>{ })
-b.button('warning', 'Warning', ()=>{ })
-b.button('info', 'Info', ()=>{ })
-b.button('light', 'Light', ()=>{ })
-b.button('dark', 'Dark', ()=>{ })
-b.button('link', 'Link', ()=>{ })` ),
+      b.code( `b.buttonGroup(
+  b.button('primary', '<', ()=>{ }),
+  b.button('primary', '1', ()=>{ }),
+  b.button('primary', '2', ()=>{ }),
+  b.button('primary', '3', ()=>{ }),
+  b.button('primary', '4', ()=>{ }),
+  b.button('primary', '>', ()=>{ }),
+)` ),
       this.demoBox(
         b.buttonGroup(
-          b.button('primary', 'Primary', ()=>{ }),
-          b.button('secondary', 'Secondary', ()=>{ }),
-          b.button('success', 'Success', ()=>{ }),
-          b.button('danger', 'Danger', ()=>{ }),
-          b.button('warning', 'Warning', ()=>{ }),
-          b.button('info', 'Info', ()=>{ }),
-          b.button('light', 'Light', ()=>{ }),
-          b.button('dark', 'Dark', ()=>{ }),
-          b.button('link', 'Link', ()=>{ }),
+          b.button('primary', '<', ()=>{ }),
+          b.button('primary', '1', ()=>{ }),
+          b.button('primary', '2', ()=>{ }),
+          b.button('primary', '3', ()=>{ }),
+          b.button('primary', '4', ()=>{ }),
+          b.button('primary', '>', ()=>{ }),
         )
       ),
 

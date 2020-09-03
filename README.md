@@ -23,7 +23,7 @@ get mainRoom () {
 
 # Space Bricks
 
-[SpaceBricks.js](https://github.com/bluefeet/RocketCastle/blob/master/SpaceBricks.js) provides a high-level and simplistic API for creating [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) objects specifically tailored to work with the [Bootstrap]https://getbootstrap.com/) front-end framework. Generating content for a Rocket Castle room is done entirely using Space Bricks.
+[SpaceBricks.js](https://github.com/bluefeet/RocketCastle/blob/master/SpaceBricks.js) provides a high-level and simplistic API for creating [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) objects specifically tailored to work with the [Bootstrap](https://getbootstrap.com/) front-end framework. Generating content for a Rocket Castle room is done entirely using Space Bricks.
 
 See the [demo game](https://rocketcastle.com/demo/) for examples of all the available bricks.
 
