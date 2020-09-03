@@ -92,17 +92,14 @@ class SpaceBricks {
   /* Interactive Elements */
 
   button (text, callback) {
-    const element = this.element( 'button' );
-    element.setAttribute( 'type', 'button' );
-    element.classList.add( 'button' );
+    const element = this.html( '<button type="button" class="button"></button>' );
     element.textContent = text;
     element.addEventListener( 'click', callback );
     return element;
   }
 
   buttonGroup (...buttons) {
-    const groupElement = this.div();
-    groupElement.classList.add( 'button-group' );
+    const groupElement = this.html( '<div class="button-group"></div>' );
 
     buttons.forEach( button => {
       groupElement.appendChild( button );
@@ -126,8 +123,7 @@ class SpaceBricks {
   /* Layout Elements */
 
   spread (...children) {
-    const gridElement = this.div();
-    gridElement.classList.add( 'grid-x' );
+    const gridElement = this.html( '<div class="grid-x"></div>' );
 
     const largeCols = Math.floor( 12 / children.length ) || 1;
     const mediumCols = largeCols * 2;
@@ -152,33 +148,28 @@ class SpaceBricks {
     }
 
     // Create our top bar of tabs.
-    let tabsElement = this.element( 'ul' );
-    tabsElement.classList.add( 'tabs' );
-    tabsElement.setAttribute( 'data-tabs', '' );
-    tabsElement.id = this.uid();
+    let tabsElement = this.html(
+      `<ul class="tabs" data-tabs id="${this.uid}"></ul>`
+    );
 
     // Create the container that the tab content goes in.
-    let tabsContentElement = this.div();
-    tabsContentElement.classList.add( 'tabs-content' );
-    tabsContentElement.setAttribute( 'data-tabs-content', tabsElement.id );
+    let tabsContentElement = this.html(
+      `<div class="tabs-content" data-tabs-content="${tabsElement.id}"></div>`,
+    );
 
     // Now add a tab for reach child, and put the child into the container.
     children.forEach( child => {
       const id = this.uid();
       
       // The tab.
-      const tabElement = this.element( 'li' );
-      tabElement.classList.add( 'tabs-title' );
-      const linkElement = this.element( 'a' );
-      linkElement.setAttribute( 'href', `#${id}` );
+      const tabElement = this.html( '<li class="tabs-title"></li>' );
+      const linkElement = this.html( `<a href="#${id}"></a>` );
       linkElement.textContent = labels.shift();
       tabElement.appendChild( linkElement );
       tabsElement.appendChild( tabElement );
       
       // The tab content.
-      const contentElement = this.div();
-      contentElement.classList.add( 'tabs-panel' );
-      contentElement.id = id;
+      const contentElement = this.html( `<div class="tabs-panel" id="${id}"></div>` );
       contentElement.appendChild( child );
       tabsContentElement.appendChild( contentElement );
     });
