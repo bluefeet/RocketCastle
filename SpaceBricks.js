@@ -152,34 +152,6 @@ class SpaceBricks {
   }
 
   spread (...children) {
-    const gridElement = this.html( '<div class="grid-x grid-padding-x"></div>' );
-
-    const l = children.length;
-
-    const fixCols = (cols)=>{
-      cols = cols || 1;
-      if (cols===5 || cols>6){ return 6 }
-      return cols; 
-    }
-
-    const largeCols = fixCols( Math.floor( 12 / children.length ) );
-    const mediumCols = fixCols( largeCols * 2 );
-    const smallCols = fixCols( mediumCols * 2 );
-
-    children.forEach( child => {
-      const cellElement = this.div();
-      cellElement.classList.add( 'cell' );
-      cellElement.classList.add( `small-${smallCols}` );
-      cellElement.classList.add( `medium-${mediumCols}` );
-      cellElement.classList.add( `large-${largeCols}` );
-      cellElement.appendChild( child );
-      gridElement.appendChild( cellElement );
-    });
-
-    return gridElement;
-  }
-
-  spread (...children) {
     const containerElement = this.html( '<div class="container"></div>' );
     const rowElement = this.html( '<div class="row"></div>' );
     containerElement.appendChild( rowElement );
