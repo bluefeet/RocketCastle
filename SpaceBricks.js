@@ -10,7 +10,7 @@ class SpaceBricks {
 
   /* Utility Methods */
 
-  uid () {
+  get uid () {
       let id = this.nextUID || 0;
       this.nextUID = id + 1;
       return `spacebricks-uid-${id}`;
@@ -128,7 +128,7 @@ class SpaceBricks {
   /* Form Elements */
 
   input (type, label) {
-    const id = this.uid();
+    const id = this.uid;
     const groupElement = this.html( '<div class="form-group"></div>' );
 
     const labelElement = this.html( `<label for="${id}"></label>` );

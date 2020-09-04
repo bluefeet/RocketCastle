@@ -36,4 +36,4 @@ See the [demo game](https://rocketcastle.com/demo/) for examples of all the avai
 - Formalize a way to create mixins to add, for example, game mechanics or new UI elements.
 - Create a guide that can take a kid from zero to a game.
 - Loot tables? Encounter tables?
-- More foundation components!
+- More bricks!
