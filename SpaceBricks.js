@@ -4,6 +4,7 @@
 */
 
 class SpaceBricks {
+
   constructor (dom) {
     this.dom = dom || window.document;
   }
@@ -21,7 +22,7 @@ class SpaceBricks {
   }
 
   html (html, ...children) {
-    const fragment = this.dom.createRange().createContextualFragment( html );
+    const fragment = this.dom.createRange().createContextualFragment( html.trim() );
     const element = fragment.firstChild;
     children.forEach( child => element.appendChild(child) );
     return element;
@@ -59,22 +60,16 @@ class SpaceBricks {
 
   /* Typography Elements */
 
-  h1 (text) {
-    const element = this.element( 'h1' );
-    element.textContent = text;
-    return element;
+  h1 (html) {
+    return this.html( `<h1>${html}</h1>` );
   }
 
-  h2 (text) {
-    const element = this.element( 'h2' );
-    element.textContent = text;
-    return element;
+  h2 (html) {
+    return this.html( `<h2>${html}</h2>` );
   }
 
-  p (text) {
-    const element = this.element( 'p' );
-    element.textContent = text;
-    return element;
+  p (html) {
+    return this.html( `<p>${html}</p>` );
   }
 
   blockquote (quote, cite) {
@@ -83,9 +78,8 @@ class SpaceBricks {
 
     if (cite) {
       const footerElement = this.html( '<footer class="blockquote-footer"></footer>' );
-      const citeElement = this.element('cite');
+      const citeElement = this.html( `<cite>${cite}</cite>` );
       citeElement.setAttribute( 'title', cite );
-      citeElement.textContent = cite;
       footerElement.appendChild( citeElement );
       quoteElement.appendChild( footerElement );
     }
@@ -103,16 +97,13 @@ class SpaceBricks {
 
   /* Control Elements */
 
-  button (type, text, callback) {
-    const buttonElement = this.html( '<button type="button" class="btn"></button>' );
+  button (type, html, callback) {
+    const buttonElement = this.html(
+      `<button type="button" class="btn">${html}</button>`
+    );
     buttonElement.classList.add( `btn-${type}` );
-    buttonElement.textContent = text;
     buttonElement.addEventListener( 'click', callback );
-
-    const pElement = this.element('p');
-    pElement.appendChild( buttonElement );    
-
-    return pElement;
+    return buttonElement;
   }
 
   buttonGroup (...buttons) {
@@ -175,6 +166,76 @@ class SpaceBricks {
     });
 
     return containerElement;
+  }
+
+  modal (options, ...children) {
+    const b = this;
+
+    if (b.currentModalID) { throw 'A modal is already open' }
+    const id = b.currentModalID = `modal-${b.uid}`
+
+    const modalElement = b.html(`
+      <div class="modal fade" id="${id}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+          </div>
+        </div>
+      </div>
+    `);
+
+    const contentElement = modalElement.querySelector('.modal-content');
+    children.forEach( child => contentElement.appendChild(child) );
+
+    if (b.currentModalLabelID) {
+      modalElement.setAttribute( 'aria-labelledby', b.currentModalLabelID );
+    }
+
+    b.dom.body.appendChild( modalElement );
+
+    const jq = $(`#${id}`);
+    jq.modal();
+    jq.on( 'hidden.bs.modal', ()=>{
+      delete this.currentModalID;
+      delete this.currentModalLabelID;
+      jq.modal('dispose');
+      b.dom.body.removeChild( modalElement );
+    });
+
+    // No return as this method actively modifies the document.
+  }
+
+  modalHeader (...children) {
+    return this.html(`<div class="modal-header"></div>`, ...children);
+  }
+
+  modalBody (...children) {
+    return this.html(`<div class="modal-body"></div>`, ...children);
+  }
+
+  modalFooter (...children) {
+    return this.html(`<div class="modal-footer"></div>`, ...children);
+  }
+
+  modalTitle (html) {
+    const b = this;
+
+    if (b.currentModalLabelID) { throw 'You can only have one modal title' }
+    const id = b.currentModalLabelID = `modal-label-${b.uid}`;
+
+    return b.html( `<h5 class="modal-title" id="${id}">${html}</h5>` );
+  }      
+
+  modalCloseButton () {
+    return this.html(`
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    `);
+  }
+
+  closeModal () {
+    if (!this.currentModalID) { throw 'There is no modal to close' }
+    $(`#${this.currentModalID}`).modal('hide');
   }
 
 }

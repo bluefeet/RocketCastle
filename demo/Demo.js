@@ -110,6 +110,7 @@ b.alert('dark', b.p('This is dark!') )` ),
         b.alert('dark', b.p('This is dark!') ),
       ),
 
+      // spread
       b.h2( 'spread' ),
       b.p( 'This lays out the elements horizontally on a wide screen and reduces the number of columns as the screen reduces in width.' ),
       b.code( `b.spread(
@@ -134,6 +135,68 @@ b.alert('dark', b.p('This is dark!') )` ),
         b.p('🐪'), b.p('🐄'), b.p('🐘'),
       ) ),
 
+      this.modalDemo,
+    );
+  }
+
+  get modalDemo () {
+    const b = this.bricks;
+
+    const header = b.modalHeader(
+      b.modalTitle( 'Modal <em>Title</em>' ),
+      b.modalCloseButton(),
+    )
+
+    const body = b.modalBody(
+      b.p('You opened the modal. <strong>Good job!</strong>'),
+    );
+    
+    const footer = b.modalFooter(
+      b.button('secondary', 'Close', ()=>{ b.closeModal() }),
+    );
+
+    const button = b.button(
+      'primary', 'Open Modal',
+      ()=>{ b.modal( {}, header, body, footer) },
+    )
+
+    return b.div(
+      b.h2( 'modal' ),
+      b.p(`
+        This creates a
+        <a href="https://getbootstrap.com/docs/4.5/components/modal/">Bootstrap Modal</a>
+        and inserts it into the page, displays it, and then when it closes, destroys it.
+      `),
+      b.p(`
+        The first parameter to the <code>modal</code> method
+        (the <code>{}</code> in <code>b.modal({},header,body,footer)</code>)\
+        is an <code>options</code> objects as
+        <a href="https://getbootstrap.com/docs/4.5/components/modal/#options">described here</a>.
+      `),
+      b.p(`
+        The <code>header</code>, <code>body</code>, and <code>footer</code> parameters are all
+        optional.
+      `),
+      b.code(`const header = b.modalHeader(
+  b.modalTitle( 'Modal <em>Title</em>' ),
+  b.modalCloseButton(),
+)
+
+const body = b.modalBody(
+  b.p('You opened the modal. <strong>Good job!</strong>'),
+);
+
+const footer = b.modalFooter(
+  b.button('secondary', 'Close', ()=>{ b.closeModal() }),
+);
+
+const button = b.button(
+  'primary', 'Open Modal',
+  ()=>{ b.modal( {}, header, body, footer ) },
+)
+
+// Now return button as part of your room.`),
+      this.demoBox( button ),
     );
   }
 

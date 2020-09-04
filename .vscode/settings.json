@@ -4,8 +4,10 @@
         "Deltac",
         "Grungle",
         "callout",
+        "labelledby",
         "spacebricks",
         "speleothems",
+        "tabindex",
         "ygrid"
     ]
 }
