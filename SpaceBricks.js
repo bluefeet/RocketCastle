@@ -104,11 +104,15 @@ class SpaceBricks {
   /* Control Elements */
 
   button (type, text, callback) {
-    const element = this.html( '<button type="button" class="btn"></button>' );
-    element.classList.add( `btn-${type}` );
-    element.textContent = text;
-    element.addEventListener( 'click', callback );
-    return element;
+    const buttonElement = this.html( '<button type="button" class="btn"></button>' );
+    buttonElement.classList.add( `btn-${type}` );
+    buttonElement.textContent = text;
+    buttonElement.addEventListener( 'click', callback );
+
+    const pElement = this.element('p');
+    pElement.appendChild( buttonElement );    
+
+    return pElement;
   }
 
   buttonGroup (...buttons) {
