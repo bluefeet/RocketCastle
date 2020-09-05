@@ -24,7 +24,7 @@ class SpaceBricks {
   html (first, ...children) {
     let stuff = [first, ...children];
     
-    let elements = [];
+    const elements = [];
     stuff.forEach( thing => {
       if (typeof thing === 'string') {
         const fragment = this.dom.createRange().createContextualFragment( thing.trim() );
@@ -35,7 +35,7 @@ class SpaceBricks {
       }
     });
 
-    let element = elements.shift();
+    const element = elements.shift();
     elements.forEach( child => element.appendChild(child) );
 
     return element;

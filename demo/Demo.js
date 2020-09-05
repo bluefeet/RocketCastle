@@ -8,9 +8,12 @@ class Demo extends RocketCastle {
 
   demoBox (...children) {
     let boxElement = this.bricks.html( '<div class="demo-box"></div>', ...children );
+
+    // Removing the margin from the last element makes for a clean layout.
     if (boxElement.lastChild && boxElement.lastChild.classList) {
       boxElement.lastChild.classList.add( 'mb-0' );
     }
+
     return boxElement;
   }
 
@@ -19,32 +22,11 @@ class Demo extends RocketCastle {
 
     return b.div(
       b.h1( 'Space Bricks' ),
-
-      // h1
-      b.h2( 'h1' ),
-      b.code( "b.h1( 'Larger Header' )" ),
-      this.demoBox( b.h1( 'Larger Header' ) ),
-
-      // h2
-      b.h2( 'h2' ),
-      b.code( "b.h2( 'Smaller Header' )" ),
-      this.demoBox( b.h2( 'Smaller Header' ) ),
-
-      // p
-      b.h2( 'p' ),
-      b.code( "b.p( 'A paragraph of text.' )" ),
-      this.demoBox( b.p( 'A paragraph of text.' ) ),
-
-      // img
-      b.h2( 'img' ),
-      b.code( "b.img( 'pexels-abdullah-ghatasheh-1631677.jpg' )" ),
-      this.demoBox( b.img( 'pexels-abdullah-ghatasheh-1631677.jpg' ) ),
-
-      // thumbnail
-      b.h2( 'thumbnail' ),
-      b.code( "b.thumbnail( 'pexels-abdullah-ghatasheh-1631677.jpg' )" ),
-      this.demoBox( b.thumbnail( 'pexels-abdullah-ghatasheh-1631677.jpg' ) ),
-
+      this.htmlDemo,
+      this.h1Demo,
+      this.h2Demo,
+      this.imgDemo,
+      this.thumbnailDemo,
       this.blockquoteDemo,
       this.codeDemo,
       this.buttonDemo,
@@ -53,6 +35,78 @@ class Demo extends RocketCastle {
       this.alertDemo,
       this.spreadDemo,
       this.modalDemo,
+    );
+  }
+
+  get htmlDemo () {
+    const b = this.bricks;
+    
+    return b.div(
+      b.h2( 'html' ),
+      b.p(`
+        Use this to output any arbitrary HTML, the imagination is your limits.
+        The first argument must be either a string of HTML, or an
+        <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement">HTML element</a>.
+        The rest of the arguments (also either HTML string or HTML element) will be made children
+        of the first argument.
+      `),
+      b.alert('warning', `
+        <strong>Important:</strong> The HTML string that you provide in the first argument must
+        represent a single HTML element, usually using a <code>&lt;div&gt;</code>, as in the
+        following example.
+      `),
+      b.code( "b.html( '<div>Hello <b>world!</b></div>' )" ),
+      this.demoBox( b.html( '<div>Hello <b>world!</b></div>' ) ),
+    );
+  }
+
+  get h1Demo () {
+    const b = this.bricks;
+    
+    return b.div(
+      b.h2( 'h1' ),
+      b.code( "b.h1( 'Larger Header' )" ),
+      this.demoBox( b.h1( 'Larger Header' ) ),
+    );
+  }
+
+  get h2Demo () {
+    const b = this.bricks;
+    
+    return b.div(
+      b.h2( 'h2' ),
+      b.code( "b.h2( 'Smaller Header' )" ),
+      this.demoBox( b.h2( 'Smaller Header' ) ),
+    );
+  }
+
+  get pDemo () { // Its a pee!
+    const b = this.bricks;
+    
+    return b.div(
+      b.h2( 'p' ),
+      b.code( "b.p( 'A paragraph of text.' )" ),
+      this.demoBox( b.p( 'A paragraph of text.' ) ),
+    );
+  }
+
+  get imgDemo () {
+    const b = this.bricks;
+    
+    return b.div(
+      b.h2( 'img' ),
+      b.code( "b.img( 'pexels-abdullah-ghatasheh-1631677.jpg' )" ),
+      this.demoBox( b.img( 'pexels-abdullah-ghatasheh-1631677.jpg' ) ),
+    );
+  }
+
+  get thumbnailDemo () {
+    const b = this.bricks;
+    
+    return b.div(
+      b.h2( 'thumbnail' ),
+      b.code( "b.thumbnail( 'pexels-abdullah-ghatasheh-1631677.jpg' )" ),
+      this.demoBox( b.thumbnail( 'pexels-abdullah-ghatasheh-1631677.jpg' ) ),
     );
   }
 
@@ -280,7 +334,7 @@ b.alert('dark', 'This is dark!' )` ),
         optional.
       `),
       b.alert( 'warning', `
-        <strong>Important:</strong> The <code>b.modal()</code> is one of the few methods in Space Blocks which does not return
+        <strong>Important:</strong> <code>b.modal()</code> is one of the few methods in Space Blocks which does not return
         an HTML element.  Instead, when it is called the modal is immediately displayed and the
         code after the modal continues to run.
       `),

@@ -29,11 +29,9 @@ See the [demo game](https://rocketcastle.com/demo/) for examples of all the avai
 
 # Ideas
 
+- More bricks!
+- Create a guide that can take a kid from zero to a game.
 - Create base themes like `dungeon`, `forest`, `space`, etc.
 - Handle dark/light modes as a base set of CSS games can pick from. [This article](https://css-tricks.com/dark-modes-with-css/) talks about some important styling points on dark sites.
-- Make the `tell` method produce a custom modal rather than calling `alert()`.
-- Add an `ask` method which gives the ability to ask the player questions in a modal.
 - Formalize a way to create mixins to add, for example, game mechanics or new UI elements.
-- Create a guide that can take a kid from zero to a game.
 - Loot tables? Encounter tables?
-- More bricks!
