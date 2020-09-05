@@ -25,6 +25,7 @@ class Demo extends RocketCastle {
       this.scrollDemo,
       this.h1Demo,
       this.h2Demo,
+      this.h3Demo,
       this.pDemo,
       this.hrDemo,
       this.imgDemo,
@@ -57,11 +58,19 @@ class Demo extends RocketCastle {
         Additional HTML string or HTMLElement objects may be passed and they will be made
         children of the first element.
       `),
-      b.alert('warning', `
-        <strong>Important:</strong> The HTML string that you provide in the first parameter must
-        represent a single HTML element, usually using a <code>&lt;div&gt;</code>, as in the
-        following example.
-      `),
+
+      b.h3( 'Syntax' ),
+      b.code( `const element = b.html( html, ...children )` ),
+      b.dl(
+        b.dt('<code>element</code>'),
+        b.dd('The final returned HTMLElement object.'),
+        b.dt('<code>html</code>'),
+        b.dd('An HTML string or HTMLElement object.'),
+        b.dt('<code>...children</code>'),
+        b.dd('Any child HTML strings or HTMLElement objects. Optional.'),
+      ),
+
+      b.h3( 'Example' ),
       b.code( "b.html( '<div>Hello <b>world!</b></div>' )" ),
       this.demoBox( b.html( '<div>Hello <b>world!</b></div>' ) ),
     );
@@ -75,6 +84,8 @@ class Demo extends RocketCastle {
       b.p(`
         This clones an element from the DOM and returns it.
       `),
+
+      b.h3( 'Example' ),
       b.code( `b.scroll('scroll-demo')` ),
       this.demoBox( b.scroll('scroll-demo') ),
     );
@@ -85,6 +96,8 @@ class Demo extends RocketCastle {
     
     return b.div(
       b.h2( 'h1' ),
+      
+      b.h3( 'Example' ),
       b.code( "b.h1( 'Larger Header' )" ),
       this.demoBox( b.h1( 'Larger Header' ) ),
     );
@@ -95,8 +108,22 @@ class Demo extends RocketCastle {
     
     return b.div(
       b.h2( 'h2' ),
+
+      b.h3( 'Example' ),
       b.code( "b.h2( 'Smaller Header' )" ),
       this.demoBox( b.h2( 'Smaller Header' ) ),
+    );
+  }
+
+  get h3Demo () {
+    const b = this.bricks;
+    
+    return b.div(
+      b.h2( 'h3' ),
+
+      b.h3( 'Example' ),
+      b.code( "b.h3( 'Tiny Header' )" ),
+      this.demoBox( b.h3( 'Tiny Header' ) ),
     );
   }
 
@@ -105,6 +132,7 @@ class Demo extends RocketCastle {
     
     return b.div(
       b.h2( 'p' ),
+      b.h3( 'Example' ),
       b.code( "b.p( 'A paragraph of text.' )" ),
       this.demoBox( b.p( 'A paragraph of text.' ) ),
     );
@@ -115,6 +143,7 @@ class Demo extends RocketCastle {
     
     return b.div(
       b.h2( 'hr' ),
+      b.h3( 'Example' ),
       b.code( 'b.hr()' ),
       this.demoBox( b.hr() ),
     );
@@ -125,6 +154,7 @@ class Demo extends RocketCastle {
     
     return b.div(
       b.h2( 'img' ),
+      b.h3( 'Example' ),
       b.code( "b.img( 'pexels-abdullah-ghatasheh-1631677.jpg' )" ),
       this.demoBox( b.img( 'pexels-abdullah-ghatasheh-1631677.jpg' ) ),
     );
@@ -135,6 +165,7 @@ class Demo extends RocketCastle {
     
     return b.div(
       b.h2( 'thumbnail' ),
+      b.h3( 'Example' ),
       b.code( "b.thumbnail( 'pexels-abdullah-ghatasheh-1631677.jpg' )" ),
       this.demoBox( b.thumbnail( 'pexels-abdullah-ghatasheh-1631677.jpg' ) ),
     );
@@ -150,6 +181,8 @@ class Demo extends RocketCastle {
         <a href="https://getbootstrap.com/docs/4.5/content/typography/#blockquotes">Bootstrap blockquote typography</a>.
         The second parameter, <code>cite</code>, is optional.
       `),
+      
+      b.h3( 'Example' ),
       b.code( `b.blockquote("It's not easy being green.", 'Kermit the Frog')` ),
       this.demoBox( b.blockquote("It's not easy being green.", 'Kermit the Frog') ),
     );
@@ -165,6 +198,8 @@ class Demo extends RocketCastle {
         <a href="https://getbootstrap.com/docs/4.5/content/code/">Bootstrap</a>.
         The code should <em>not</em> be escaped for HTML as it is treated as plain text.
       `),
+
+      b.h3( 'Example' ),
       b.code(`b.code('cupcakes.forEach( cupcake => me.eat(cupcake) );')`),
       this.demoBox(
         b.code('cupcakes.forEach( cupcake => me.eat(cupcake) );') 
@@ -188,6 +223,7 @@ class Demo extends RocketCastle {
         could put each of your buttons in a <code>div</code>, wrap it in a <code>buttonGroup</code>,
         or use a <code>spread</code>.
       `),
+      b.h3( 'Example' ),
       b.code( `b.button('primary', 'Primary', ()=>{ b.modal(b.modalBody('Hello!')) })
 b.button('secondary', 'Secondary', ()=>{ b.modal(b.modalBody('Hello secondary!')) })
 b.button('success', 'Success', ()=>{ b.modal(b.modalBody('Hello success!')) })
@@ -221,6 +257,7 @@ b.button('link', 'Link', ()=>{ b.modal(b.modalBody('Hello link!')) })` ),
         <a href="https://getbootstrap.com/docs/4.5/components/button-group/">Bootstrap button group component</a>
         which lays the buttons our horizontally and connects their edges.
       `),
+      b.h3( 'Example' ),
       b.code( `b.buttonGroup(
   b.button('primary', '<', ()=>{ }),
   b.button('primary', '1', ()=>{ }),
@@ -254,6 +291,7 @@ b.button('link', 'Link', ()=>{ b.modal(b.modalBody('Hello link!')) })` ),
         <a href="https://getbootstrap.com/docs/4.5/components/forms/">Bootstrap form components</a>
         for more info.
       `),
+      b.h3( 'Example' ),
       b.code( `b.input('text', 'What is your character\'s name?', (name)=> {
   this.player.name = name;
 })
@@ -280,6 +318,8 @@ b.input('number', 'How old is your character?', (age)=>{
         This creates a
         <a href="https://getbootstrap.com/docs/4.5/components/alerts/">Bootstrap alert component</a>.
       `),
+
+      b.h3( 'Example' ),
       b.code( `b.alert('primary', 'This is primary!' )
 b.alert('secondary', 'This is secondary!' )
 b.alert('success', 'This is success!' )
@@ -313,6 +353,8 @@ b.alert('dark', 'This is dark!' )` ),
         <a href="https://en.wikipedia.org/wiki/Responsive_web_design">responsive fashion</a>
         where the number of columns reduces as the width of the browser gets smaller.
       `),
+
+      b.h3( 'Example' ),
       b.code( `b.spread(
   '🐋', '🐙', '🐢',
   '🦋', '🦉', '🦩',
@@ -378,6 +420,8 @@ b.alert('dark', 'This is dark!' )` ),
         an HTML element.  Instead, when it is called the modal is immediately displayed and the
         code after the modal continues to run.
       `),
+
+      b.h3( 'Example' ),
       b.code(`const header = b.modalHeader(
   b.modalTitle( 'Modal <em>Title</em>' ),
   b.modalCloseButton(),

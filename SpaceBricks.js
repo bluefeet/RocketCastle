@@ -88,6 +88,10 @@ class SpaceBricks {
     return this.html( `<h2>${html}</h2>` );
   }
 
+  h3 (html='') {
+    return this.html( `<h3>${html}</h3>` );
+  }
+
   p (html='') {
     return this.html( `<p>${html}</p>` );
   }
@@ -110,6 +114,18 @@ class SpaceBricks {
     }
 
     return quoteElement;
+  }
+
+  dl (...children) {
+    return this.element('dl', ...children);
+  }
+
+  dt (html) {
+    return this.element('dt', html);
+  }
+
+  dd (html) {
+    return this.element('dd', html);
   }
 
   code (text='') {

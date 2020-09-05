@@ -1,17 +1,28 @@
 /* https://www.pexels.com/ */
 .demo-box {
-  border: dashed 0.2rem #96c2df;
+  border-left: dashed 0.2rem #96c2df;
   padding: 1rem;
-  margin-bottom: 0.5rem; 
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 h1 {
+  color: #60328b;
   padding-bottom: 0.6rem;
 }
 
 h2 {
+  color: #555;
   padding-top: 0.9rem;
   padding-bottom: 0.3rem;
+}
+
+h3 {
+  padding: 0 1rem 0.1rem 2rem;
+  background-color: #777;
+  color: #fff;
+  font-size: 1.5rem;
+  display: inline-block;
 }
 
 .demo-box h2 {
@@ -20,9 +31,13 @@ h2 {
 
 hr {
   margin-top: 3rem;
-  border-top: solid 0.25rem #c2a8d1;
+  border-top: solid 0.4rem #a8d1c0;
 }
 
 hr:first-of-type {
   margin-top: 0;
+}
+
+dd{
+  margin-left: 1rem;
 }
