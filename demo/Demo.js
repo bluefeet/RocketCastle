@@ -20,11 +20,13 @@ class Demo extends RocketCastle {
   get mainRoom () {
     const b = this.bricks;
 
-    return b.div(
-      b.h1( 'Space Bricks' ),
+    const contents = [
       this.htmlDemo,
+      this.scrollDemo,
       this.h1Demo,
       this.h2Demo,
+      this.pDemo,
+      this.hrDemo,
       this.imgDemo,
       this.thumbnailDemo,
       this.blockquoteDemo,
@@ -35,6 +37,11 @@ class Demo extends RocketCastle {
       this.alertDemo,
       this.spreadDemo,
       this.modalDemo,
+    ].flatMap( demo => [b.hr(), demo] );
+
+    return b.div(
+      b.h1( 'Space Bricks' ),
+      ...contents,
     );
   }
 
@@ -45,18 +52,31 @@ class Demo extends RocketCastle {
       b.h2( 'html' ),
       b.p(`
         Use this to output any arbitrary HTML, the imagination is your limits.
-        The first argument must be either a string of HTML, or an
-        <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement">HTML element</a>.
-        The rest of the arguments (also either HTML string or HTML element) will be made children
-        of the first argument.
+        The first parameter must be either a string of HTML, or an
+        <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement">HTMLElement</a>.
+        Additional HTML string or HTMLElement objects may be passed and they will be made
+        children of the first element.
       `),
       b.alert('warning', `
-        <strong>Important:</strong> The HTML string that you provide in the first argument must
+        <strong>Important:</strong> The HTML string that you provide in the first parameter must
         represent a single HTML element, usually using a <code>&lt;div&gt;</code>, as in the
         following example.
       `),
       b.code( "b.html( '<div>Hello <b>world!</b></div>' )" ),
       this.demoBox( b.html( '<div>Hello <b>world!</b></div>' ) ),
+    );
+  }
+
+  get scrollDemo () {
+    const b = this.bricks;
+    
+    return b.div(
+      b.h2( 'scroll' ),
+      b.p(`
+        This clones an element from the DOM and returns it.
+      `),
+      b.code( `b.scroll('scroll-demo')` ),
+      this.demoBox( b.scroll('scroll-demo') ),
     );
   }
 
@@ -90,6 +110,16 @@ class Demo extends RocketCastle {
     );
   }
 
+  get hrDemo () {
+    const b = this.bricks;
+    
+    return b.div(
+      b.h2( 'hr' ),
+      b.code( 'b.hr()' ),
+      this.demoBox( b.hr() ),
+    );
+  }
+
   get imgDemo () {
     const b = this.bricks;
     
@@ -118,7 +148,7 @@ class Demo extends RocketCastle {
       b.p(`
         Its a quote box thing using
         <a href="https://getbootstrap.com/docs/4.5/content/typography/#blockquotes">Bootstrap blockquote typography</a>.
-        The second argument, <code>cite</code>, is optional.
+        The second parameter, <code>cite</code>, is optional.
       `),
       b.code( `b.blockquote("It's not easy being green.", 'Kermit the Frog')` ),
       this.demoBox( b.blockquote("It's not easy being green.", 'Kermit the Frog') ),
@@ -215,6 +245,8 @@ b.button('link', 'Link', ()=>{ b.modal(b.modalBody('Hello link!')) })` ),
   get inputDemo () {
     const b = this.bricks;
     
+    const howOld = b.p();
+
     return b.div(
       b.h2( 'input' ),
       b.p(`
@@ -222,11 +254,19 @@ b.button('link', 'Link', ()=>{ b.modal(b.modalBody('Hello link!')) })` ),
         <a href="https://getbootstrap.com/docs/4.5/components/forms/">Bootstrap form components</a>
         for more info.
       `),
-      b.code( `b.input('text', 'Favorite Word')
-b.input('number', 'Favorite Number')` ),
+      b.code( `b.input('text', 'What is your character\'s name?', (name)=> {
+  this.player.name = name;
+})
+b.input('number', 'How old is your character?', (age)=>{
+  this.player.age = age;
+})` ),
       this.demoBox(
-        b.input('text', 'What is your character\'s name?'),
-        b.input('number', 'How old is your character?'),
+        b.input('text', 'What is your character\'s name?', (name)=> {
+          this.player.name = name;
+        }),
+        b.input('number', 'How old is your character?', (age)=>{
+          this.player.age = age;
+        }),
       ),
     );
   }

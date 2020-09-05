@@ -1,17 +1,28 @@
 /* https://www.pexels.com/ */
 .demo-box {
-  border: dashed 0.2rem #7fc1ee;
+  border: dashed 0.2rem #96c2df;
   padding: 1rem;
   margin-bottom: 0.5rem; 
 }
 
 h1 {
   padding-bottom: 0.6rem;
-  border-bottom: solid 0.6rem #999;
 }
 
 h2 {
   padding-top: 0.9rem;
   padding-bottom: 0.3rem;
-  border-bottom: solid 0.3rem #ddd;
+}
+
+.demo-box h2 {
+  padding-top: 0;
+}
+
+hr {
+  margin-top: 3rem;
+  border-top: solid 0.25rem #c2a8d1;
+}
+
+hr:first-of-type {
+  margin-top: 0;
 }

@@ -5,7 +5,12 @@
 }
 
 pre {
-  border: solid 0.0625rem #ddd;
-  background-color: #eee;
+  border-left: solid 0.4rem #5483a1;
+  bo-rder: solid 0.0625rem #ddd;
+  background-color: rgb(241, 241, 241);
   padding: 0.5rem;
 }
+
+#space-scrolls {
+  display: none;
+} 

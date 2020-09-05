@@ -1,6 +1,7 @@
 /*
   © 2020 Aran Deltac
   MIT License
+  https://rocketcastle.com
 */
 
 class SpaceBricks {
@@ -30,9 +31,7 @@ class SpaceBricks {
         const fragment = this.dom.createRange().createContextualFragment( thing.trim() );
         elements.push( ...fragment.childNodes )
       }
-      else {
-        elements.push( thing );
-      }
+      else elements.push( thing );
     });
 
     const element = elements.shift();
@@ -51,6 +50,10 @@ class SpaceBricks {
     return object instanceof Object && object.constructor === Object;
   }
 
+  scroll (id) {
+    return this.find( id ).cloneNode( true );
+  }
+
   /* Basic Elements */
 
   element (tagName, ...children) {
@@ -65,31 +68,35 @@ class SpaceBricks {
 
   img (src) {
     const element = this.html( '<img class="img-fluid">' );
-    element.setAttribute( 'src', src );
+    if (src) element.setAttribute( 'src', src );
     return element;
   }
 
   thumbnail (src) {
     const element = this.html( '<img class="img-thumbnail">' );
-    element.setAttribute( 'src', src );
+    if (src) element.setAttribute( 'src', src );
     return element;
   }
 
   /* Typography Elements */
 
-  h1 (html) {
+  h1 (html='') {
     return this.html( `<h1>${html}</h1>` );
   }
 
-  h2 (html) {
+  h2 (html='') {
     return this.html( `<h2>${html}</h2>` );
   }
 
-  p (html) {
+  p (html='') {
     return this.html( `<p>${html}</p>` );
   }
 
-  blockquote (quote, cite) {
+  hr () {
+    return this.element('hr');
+  }
+
+  blockquote (quote='', cite) {
     const quoteElement = this.html( `<blockquote class="blockquote"></blockquote>` );
     quoteElement.appendChild( this.html(quote) );
 
@@ -105,7 +112,7 @@ class SpaceBricks {
     return quoteElement;
   }
 
-  code (text) {
+  code (text='') {
     const preElement = this.element( 'pre' );
     const codeElement = this.element( 'code' );
     codeElement.textContent = text;
@@ -115,7 +122,7 @@ class SpaceBricks {
 
   /* Control Elements */
 
-  button (type, html, callback) {
+  button (type, html='', callback) {
     const buttonElement = this.html(
       `<button type="button" class="btn"></button>`, html
     );
@@ -136,7 +143,7 @@ class SpaceBricks {
 
   /* Form Elements */
 
-  input (type, label) {
+  input (type, label='', onChangeCallback) {
     const id = this.uid;
     const groupElement = this.html( '<div class="form-group"></div>' );
 
@@ -144,9 +151,16 @@ class SpaceBricks {
     groupElement.appendChild( labelElement );
 
     const inputElement = this.html( `<input class="form-control" id="${id}">` );
+    inputElement.setAttribute( 'type', type )
     groupElement.appendChild( inputElement );
 
-    return groupElement;    
+    if (onChangeCallback) {
+      inputElement.addEventListener( 'change', (event)=>{
+        onChangeCallback( event.target.value )
+      });
+    }
+
+    return groupElement;
   }
 
   /* Container Elements */
@@ -235,13 +249,13 @@ class SpaceBricks {
     return this.html(`<div class="modal-footer"></div>`, ...children);
   }
 
-  modalTitle (html) {
+  modalTitle (html='') {
     const b = this;
 
     if (b.currentModalLabelID) { throw 'You can only have one modal title' }
     const id = b.currentModalLabelID = `modal-label-${b.uid}`;
 
-    return b.html( `<h5 class="modal-title" id="${id}">${html}</h5>` );
+    return b.html( `<h5 class="modal-title" id="${id}"></h5>`, html );
   }      
 
   modalCloseButton () {
