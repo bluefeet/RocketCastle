@@ -21,10 +21,23 @@ class SpaceBricks {
     return this.dom.getElementById( id );
   }
 
-  html (html, ...children) {
-    const fragment = this.dom.createRange().createContextualFragment( html.trim() );
-    const element = fragment.firstChild;
-    children.forEach( child => element.appendChild(child) );
+  html (first, ...children) {
+    let stuff = [first, ...children];
+    
+    let elements = [];
+    stuff.forEach( thing => {
+      if (typeof thing === 'string') {
+        const fragment = this.dom.createRange().createContextualFragment( thing.trim() );
+        elements.push( ...fragment.childNodes )
+      }
+      else {
+        elements.push( thing );
+      }
+    });
+
+    let element = elements.shift();
+    elements.forEach( child => element.appendChild(child) );
+
     return element;
   }
 
@@ -34,26 +47,30 @@ class SpaceBricks {
     }   
   }
 
+  isPlainObject (object) {
+    return object instanceof Object && object.constructor === Object;
+  }
+
   /* Basic Elements */
 
   element (tagName, ...children) {
     const element = this.dom.createElement( tagName );
-    children.forEach( child => element.appendChild(child) );
+    children.forEach( child => element.appendChild( this.html(child) ) );
     return element;
   }
 
   div (...children) {
-    return this.element( 'div', ...children );
+    return this.element( 'div', ...children);
   }
 
   img (src) {
-    const element = this.html( '<img class="img-fluid">' )
+    const element = this.html( '<img class="img-fluid">' );
     element.setAttribute( 'src', src );
     return element;
   }
 
   thumbnail (src) {
-    const element = this.html( '<img class="img-thumbnail">' )
+    const element = this.html( '<img class="img-thumbnail">' );
     element.setAttribute( 'src', src );
     return element;
   }
@@ -73,12 +90,13 @@ class SpaceBricks {
   }
 
   blockquote (quote, cite) {
-    const quoteElement = this.html( '<blockquote class="blockquote"></blockquote>' );
-    quoteElement.textContent = quote;
+    const quoteElement = this.html( `<blockquote class="blockquote"></blockquote>` );
+    quoteElement.appendChild( this.html(quote) );
 
     if (cite) {
       const footerElement = this.html( '<footer class="blockquote-footer"></footer>' );
-      const citeElement = this.html( `<cite>${cite}</cite>` );
+      const citeElement = this.html( `<cite></cite>` );
+      citeElement.appendChild( this.html(cite) );
       citeElement.setAttribute( 'title', cite );
       footerElement.appendChild( citeElement );
       quoteElement.appendChild( footerElement );
@@ -99,7 +117,7 @@ class SpaceBricks {
 
   button (type, html, callback) {
     const buttonElement = this.html(
-      `<button type="button" class="btn">${html}</button>`
+      `<button type="button" class="btn"></button>`, html
     );
     buttonElement.classList.add( `btn-${type}` );
     buttonElement.addEventListener( 'click', callback );
@@ -122,8 +140,7 @@ class SpaceBricks {
     const id = this.uid;
     const groupElement = this.html( '<div class="form-group"></div>' );
 
-    const labelElement = this.html( `<label for="${id}"></label>` );
-    labelElement.textContent = label;
+    const labelElement = this.html( `<label for="${id}"></label>`, label );
     groupElement.appendChild( labelElement );
 
     const inputElement = this.html( `<input class="form-control" id="${id}">` );
@@ -135,10 +152,11 @@ class SpaceBricks {
   /* Container Elements */
 
   alert (type, ...children) {
-    let element = this.html( '<div class="alert" role="alert"></div>' );
+    let element = this.html( '<div class="alert" role="alert"></div>', ...children );
     element.classList.add( `alert-${type}` );
-    children.forEach( child => element.appendChild(child) );
-    element.lastChild.classList.add( 'mb-0' );
+    if (element.lastChild && element.lastChild.classList) {
+      element.lastChild.classList.add( 'mb-0' );
+    }
     return element;
   }
 
@@ -160,19 +178,20 @@ class SpaceBricks {
     const sm = fixCols( md * 2 );
 
     children.forEach( child => {
-      const colElement = this.html( `<div class="col-sm-${sm} col-md-${md} col-lg-${lg}"></div>` );
-      colElement.appendChild( child );
+      const colElement = this.html( `<div class="col-sm-${sm} col-md-${md} col-lg-${lg}"></div>`, child );
       rowElement.appendChild( colElement );
     });
 
     return containerElement;
   }
 
-  modal (options, ...children) {
+  modal (...stuff) {
     const b = this;
 
+    const options = (stuff.length && b.isPlainObject(stuff[0])) ? stuff.shift() : {};
+
     if (b.currentModalID) { throw 'A modal is already open' }
-    const id = b.currentModalID = `modal-${b.uid}`
+    const id = b.currentModalID = `modal-${b.uid}`;
 
     const modalElement = b.html(`
       <div class="modal fade" id="${id}" tabindex="-1" aria-hidden="true">
@@ -184,7 +203,7 @@ class SpaceBricks {
     `);
 
     const contentElement = modalElement.querySelector('.modal-content');
-    children.forEach( child => contentElement.appendChild(child) );
+    stuff.forEach( child => contentElement.appendChild(child) );
 
     if (b.currentModalLabelID) {
       modalElement.setAttribute( 'aria-labelledby', b.currentModalLabelID );

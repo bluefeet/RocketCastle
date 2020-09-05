@@ -7,8 +7,11 @@
 class Demo extends RocketCastle {
 
   demoBox (...children) {
-    children[ children.length - 1 ].classList.add( 'mb-0' );
-    return this.bricks.html( '<div class="demo-box"></div>', ...children );
+    let boxElement = this.bricks.html( '<div class="demo-box"></div>', ...children );
+    if (boxElement.lastChild && boxElement.lastChild.classList) {
+      boxElement.lastChild.classList.add( 'mb-0' );
+    }
+    return boxElement;
   }
 
   get mainRoom () {
@@ -42,24 +45,98 @@ class Demo extends RocketCastle {
       b.code( "b.thumbnail( 'pexels-abdullah-ghatasheh-1631677.jpg' )" ),
       this.demoBox( b.thumbnail( 'pexels-abdullah-ghatasheh-1631677.jpg' ) ),
 
-      // blockquote
+      this.blockquoteDemo,
+      this.codeDemo,
+      this.buttonDemo,
+      this.buttonGroupDemo,
+      this.inputDemo,
+      this.alertDemo,
+      this.spreadDemo,
+      this.modalDemo,
+    );
+  }
+
+  get blockquoteDemo () {
+    const b = this.bricks;
+    
+    return b.div(
       b.h2( 'blockquote' ),
+      b.p(`
+        Its a quote box thing using
+        <a href="https://getbootstrap.com/docs/4.5/content/typography/#blockquotes">Bootstrap blockquote typography</a>.
+        The second argument, <code>cite</code>, is optional.
+      `),
       b.code( `b.blockquote("It's not easy being green.", 'Kermit the Frog')` ),
       this.demoBox( b.blockquote("It's not easy being green.", 'Kermit the Frog') ),
+    );
+  }
 
-      // code
+  get codeDemo () {
+    const b = this.bricks;
+    
+    return b.div(
       b.h2( 'code' ),
-      b.code( "b.code('cupcakes.forEach( cupcake => me.eat(cupcake) );" ),
-      this.demoBox( b.code('cupcakes.forEach( cupcake => me.eat(cupcake) );') ),
+      b.p(`
+        Displays source code (like JavaScript) using a fixed-width font as provided by
+        <a href="https://getbootstrap.com/docs/4.5/content/code/">Bootstrap</a>.
+        The code should <em>not</em> be escaped for HTML as it is treated as plain text.
+      `),
+      b.code(`b.code('cupcakes.forEach( cupcake => me.eat(cupcake) );')`),
+      this.demoBox(
+        b.code('cupcakes.forEach( cupcake => me.eat(cupcake) );') 
+      ),
+    );
+  }
 
-      // button
+  get buttonDemo () {
+    const b = this.bricks;
+    
+    return b.div(
       b.h2( 'button' ),
-      b.html( '<p>Possible button types are <code>primary</code>, <code>secondary</code>, <code>success</code>, <code>danger</code>, <code>warning</code>, <code>info</code>, <code>light</code>, <code>dark</code>, and <code>link</code>.</p>' ),
-      b.code( "b.button('primary', 'Primary', ()=>{ })" ),
-      this.demoBox( b.button('primary', 'Primary', ()=>{ }) ),
+      b.p(`
+        Creates a
+        <a href="https://getbootstrap.com/docs/4.5/components/buttons/">Bootstrap button component</a>.
+      `),
+      b.alert('info', `
+        <strong>Note:</strong> Buttons are
+        <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Inline_elements">inline elements</a>,
+        thus they will flow horizontally like text does.  If you want to flow them differently you
+        could put each of your buttons in a <code>div</code>, wrap it in a <code>buttonGroup</code>,
+        or use a <code>spread</code>.
+      `),
+      b.code( `b.button('primary', 'Primary', ()=>{ b.modal(b.modalBody('Hello!')) })
+b.button('secondary', 'Secondary', ()=>{ b.modal(b.modalBody('Hello secondary!')) })
+b.button('success', 'Success', ()=>{ b.modal(b.modalBody('Hello success!')) })
+b.button('danger', 'Danger', ()=>{ b.modal(b.modalBody('Hello danger!')) })
+b.button('warning', 'Warning', ()=>{ b.modal(b.modalBody('Hello warning!')) })
+b.button('info', 'Info', ()=>{ b.modal(b.modalBody('Hello info!')) })
+b.button('light', 'Light', ()=>{ b.modal(b.modalBody('Hello light!')) })
+b.button('dark', 'Dark', ()=>{ b.modal(b.modalBody('Hello dark!')) })
+b.button('link', 'Link', ()=>{ b.modal(b.modalBody('Hello link!')) })` ),
+      this.demoBox(
+        b.button('primary', 'Primary', ()=>{ b.modal(b.modalBody('Hello!')) }),
+        b.button('secondary', 'Secondary', ()=>{ b.modal(b.modalBody('Hello secondary!')) }),
+        b.button('success', 'Success', ()=>{ b.modal(b.modalBody('Hello success!')) }),
+        b.button('danger', 'Danger', ()=>{ b.modal(b.modalBody('Hello danger!')) }),
+        b.button('warning', 'Warning', ()=>{ b.modal(b.modalBody('Hello warning!')) }),
+        b.button('info', 'Info', ()=>{ b.modal(b.modalBody('Hello info!')) }),
+        b.button('light', 'Light', ()=>{ b.modal(b.modalBody('Hello light!')) }),
+        b.button('dark', 'Dark', ()=>{ b.modal(b.modalBody('Hello dark!')) }),
+        b.button('link', 'Link', ()=>{ b.modal(b.modalBody('Hello link!')) }),
+      ),
+    );
+  }
 
-      // buttonGroup
+  get buttonGroupDemo () {
+    const b = this.bricks;
+    
+    return b.div(
       b.h2( 'buttonGroup' ),
+      b.p(`
+        Creates a
+        <a href="https://getbootstrap.com/docs/4.5/components/button-group/">Bootstrap button group component</a>
+        which lays the buttons our horizontally and connects their edges.
+      `),
       b.code( `b.buttonGroup(
   b.button('primary', '<', ()=>{ }),
   b.button('primary', '1', ()=>{ }),
@@ -78,64 +155,91 @@ class Demo extends RocketCastle {
           b.button('primary', '>', ()=>{ }),
         )
       ),
+    );
+  }
 
-      // input
+  get inputDemo () {
+    const b = this.bricks;
+    
+    return b.div(
       b.h2( 'input' ),
-      b.p( 'Creates an text input box with an optional label.' ),
+      b.p(`
+        Creates an text input box with an optional label. See
+        <a href="https://getbootstrap.com/docs/4.5/components/forms/">Bootstrap form components</a>
+        for more info.
+      `),
       b.code( `b.input('text', 'Favorite Word')
 b.input('number', 'Favorite Number')` ),
       this.demoBox(
-        b.input('text', 'Favorite Word'),
-        b.input('number', 'Favorite Number'),
+        b.input('text', 'What is your character\'s name?'),
+        b.input('number', 'How old is your character?'),
       ),
+    );
+  }
 
-      // alert
+  get alertDemo () {
+    const b = this.bricks;
+    
+    return b.div(
       b.h2( 'alert' ),
-      b.code( `b.alert('primary', b.p('This is primary!') )
-b.alert('secondary', b.p('This is secondary!') )
-b.alert('success', b.p('This is success!') )
-b.alert('danger', b.p('This is danger!') )
-b.alert('warning', b.p('This is warning!') )
-b.alert('info', b.p('This is info!') )
-b.alert('light', b.p('This is light!') )
-b.alert('dark', b.p('This is dark!') )` ),
+      b.p(`
+        This creates a
+        <a href="https://getbootstrap.com/docs/4.5/components/alerts/">Bootstrap alert component</a>.
+      `),
+      b.code( `b.alert('primary', 'This is primary!' )
+b.alert('secondary', 'This is secondary!' )
+b.alert('success', 'This is success!' )
+b.alert('danger', 'This is danger!' )
+b.alert('warning', 'This is warning!' )
+b.alert('info', 'This is info!' )
+b.alert('light', 'This is light!' )
+b.alert('dark', 'This is dark!' )` ),
       this.demoBox(
-        b.alert('primary', b.p('This is primary!') ),
-        b.alert('secondary', b.p('This is secondary!') ),
-        b.alert('success', b.p('This is success!') ),
-        b.alert('danger', b.p('This is danger!') ),
-        b.alert('warning', b.p('This is warning!') ),
-        b.alert('info', b.p('This is info!') ),
-        b.alert('light', b.p('This is light!') ),
-        b.alert('dark', b.p('This is dark!') ),
+        b.alert('primary', 'This is primary!' ),
+        b.alert('secondary', 'This is secondary!' ),
+        b.alert('success', 'This is success!' ),
+        b.alert('danger', 'This is danger!' ),
+        b.alert('warning', 'This is warning!' ),
+        b.alert('info', 'This is info!' ),
+        b.alert('light', 'This is light!' ),
+        b.alert('dark', 'This is dark!' ),
       ),
+    );
+  }
 
-      // spread
+  get spreadDemo () {
+    const b = this.bricks;
+
+    return b.div(
       b.h2( 'spread' ),
-      b.p( 'This lays out the elements horizontally on a wide screen and reduces the number of columns as the screen reduces in width.' ),
+      b.p(`
+        This uses the
+        <a href="https://getbootstrap.com/docs/4.5/layout/grid/">Bootstrp grid system</a>
+        to lay out the elements horizontal in a
+        <a href="https://en.wikipedia.org/wiki/Responsive_web_design">responsive fashion</a>
+        where the number of columns reduces as the width of the browser gets smaller.
+      `),
       b.code( `b.spread(
-  b.p('🐋'), b.p('🐙'), b.p('🐢'),
-  b.p('🦋'), b.p('🦉'), b.p('🦩'),
-  b.p('🦘'), b.p('🦡'), b.p('🐿️'),
-  b.p('🐪'), b.p('🐄'), b.p('🐘'),
+  '🐋', '🐙', '🐢',
+  '🦋', '🦉', '🦩',
+  '🦘', '🦡', '🐿️',
+  '🐪', '🐄', '🐘',
 )` ),
       this.demoBox( b.spread(
-        b.p('🐋'), b.p('🐙'), b.p('🐢'),
-        b.p('🦋'), b.p('🦉'), b.p('🦩'),
-        b.p('🦘'), b.p('🦡'), b.p('🐿️'),
-        b.p('🐪'), b.p('🐄'), b.p('🐘'),
+        '🐋', '🐙', '🐢',
+        '🦋', '🦉', '🦩',
+        '🦘', '🦡', '🐿️',
+        '🐪', '🐄', '🐘',
       ) ),
 
       b.code( `b.spread(
-  b.p('🐋'), b.p('🐙'), b.p('🐢'),
-  b.p('🐪'), b.p('🐄'), b.p('🐘'),
+  '🐋', '🐙', '🐢',
+  '🐪', '🐄', '🐘',
 )` ),
       this.demoBox( b.spread(
-        b.p('🐋'), b.p('🐙'), b.p('🐢'),
-        b.p('🐪'), b.p('🐄'), b.p('🐘'),
+        '🐋', '🐙', '🐢',
+        '🐪', '🐄', '🐘',
       ) ),
-
-      this.modalDemo,
     );
   }
 
@@ -164,18 +268,21 @@ b.alert('dark', b.p('This is dark!') )` ),
       b.h2( 'modal' ),
       b.p(`
         This creates a
-        <a href="https://getbootstrap.com/docs/4.5/components/modal/">Bootstrap Modal</a>
+        <a href="https://getbootstrap.com/docs/4.5/components/modal/">Bootstrap modal component</a>
         and inserts it into the page, displays it, and then when it closes, destroys it.
       `),
       b.p(`
-        The first parameter to the <code>modal</code> method
-        (the <code>{}</code> in <code>b.modal({},header,body,footer)</code>)\
-        is an <code>options</code> objects as
-        <a href="https://getbootstrap.com/docs/4.5/components/modal/#options">described here</a>.
+        The first parameter to the <code>modal</code> method may be an <code>options</code> object.
+        Available options are <a href="https://getbootstrap.com/docs/4.5/components/modal/#options">described here</a>.
       `),
       b.p(`
         The <code>header</code>, <code>body</code>, and <code>footer</code> parameters are all
         optional.
+      `),
+      b.alert( 'warning', `
+        <strong>Important:</strong> The <code>b.modal()</code> is one of the few methods in Space Blocks which does not return
+        an HTML element.  Instead, when it is called the modal is immediately displayed and the
+        code after the modal continues to run.
       `),
       b.code(`const header = b.modalHeader(
   b.modalTitle( 'Modal <em>Title</em>' ),
