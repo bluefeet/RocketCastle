@@ -224,25 +224,25 @@ class Demo extends RocketCastle {
         or use a <code>spread</code>.
       `),
       b.h3( 'Example' ),
-      b.code( `b.button('primary', 'Primary', ()=>{ b.modal(b.modalBody('Hello!')) })
-b.button('secondary', 'Secondary', ()=>{ b.modal(b.modalBody('Hello secondary!')) })
-b.button('success', 'Success', ()=>{ b.modal(b.modalBody('Hello success!')) })
-b.button('danger', 'Danger', ()=>{ b.modal(b.modalBody('Hello danger!')) })
-b.button('warning', 'Warning', ()=>{ b.modal(b.modalBody('Hello warning!')) })
-b.button('info', 'Info', ()=>{ b.modal(b.modalBody('Hello info!')) })
-b.button('light', 'Light', ()=>{ b.modal(b.modalBody('Hello light!')) })
-b.button('dark', 'Dark', ()=>{ b.modal(b.modalBody('Hello dark!')) })
-b.button('link', 'Link', ()=>{ b.modal(b.modalBody('Hello link!')) })` ),
+      b.code( `b.button('primary', 'Primary', ()=>{ /* Do something. */ })
+b.button('secondary', 'Secondary', ()=>{ /* Do something. */ })
+b.button('success', 'Success', ()=>{ /* Do something. */ })
+b.button('danger', 'Danger', ()=>{ /* Do something. */ })
+b.button('warning', 'Warning', ()=>{ /* Do something. */ })
+b.button('info', 'Info', ()=>{ /* Do something. */ })
+b.button('light', 'Light', ()=>{ /* Do something. */ })
+b.button('dark', 'Dark', ()=>{ /* Do something. */ })
+b.button('link', 'Link', ()=>{ /* Do something. */ })` ),
       this.demoBox(
-        b.button('primary', 'Primary', ()=>{ b.modal(b.modalBody('Hello!')) }),
-        b.button('secondary', 'Secondary', ()=>{ b.modal(b.modalBody('Hello secondary!')) }),
-        b.button('success', 'Success', ()=>{ b.modal(b.modalBody('Hello success!')) }),
-        b.button('danger', 'Danger', ()=>{ b.modal(b.modalBody('Hello danger!')) }),
-        b.button('warning', 'Warning', ()=>{ b.modal(b.modalBody('Hello warning!')) }),
-        b.button('info', 'Info', ()=>{ b.modal(b.modalBody('Hello info!')) }),
-        b.button('light', 'Light', ()=>{ b.modal(b.modalBody('Hello light!')) }),
-        b.button('dark', 'Dark', ()=>{ b.modal(b.modalBody('Hello dark!')) }),
-        b.button('link', 'Link', ()=>{ b.modal(b.modalBody('Hello link!')) }),
+        b.button('primary', 'Primary', ()=>{ /* Do something. */ }),
+        b.button('secondary', 'Secondary', ()=>{ /* Do something. */ }),
+        b.button('success', 'Success', ()=>{ /* Do something. */ }),
+        b.button('danger', 'Danger', ()=>{ /* Do something. */ }),
+        b.button('warning', 'Warning', ()=>{ /* Do something. */ }),
+        b.button('info', 'Info', ()=>{ /* Do something. */ }),
+        b.button('light', 'Light', ()=>{ /* Do something. */ }),
+        b.button('dark', 'Dark', ()=>{ /* Do something. */ }),
+        b.button('link', 'Link', ()=>{ /* Do something. */ }),
       ),
     );
   }
@@ -382,38 +382,20 @@ b.alert('dark', 'This is dark!' )` ),
   get modalDemo () {
     const b = this.bricks;
 
-    const header = b.modalHeader(
-      b.modalTitle( 'Modal <em>Title</em>' ),
-      b.modalCloseButton(),
-    )
-
-    const body = b.modalBody(
-      b.p('You opened the modal. <strong>Good job!</strong>'),
-    );
-    
-    const footer = b.modalFooter(
-      b.button('secondary', 'Close', ()=>{ b.closeModal() }),
-    );
-
     const button = b.button(
       'primary', 'Open Modal',
-      ()=>{ b.modal( {}, header, body, footer) },
+      ()=>{ b.modal(
+        b.p('You opened the modal. <strong>Good job!</strong>'),
+        b.button( 'primary', 'OK', ()=>{ b.closeModal() } ),
+      ) },
     )
 
     return b.div(
       b.h2( 'modal' ),
       b.p(`
-        This creates a
+        This creates a simplified
         <a href="https://getbootstrap.com/docs/4.5/components/modal/">Bootstrap modal component</a>
         and inserts it into the page, displays it, and then when it closes, destroys it.
-      `),
-      b.p(`
-        The first parameter to the <code>modal</code> method may be an <code>options</code> object.
-        Available options are <a href="https://getbootstrap.com/docs/4.5/components/modal/#options">described here</a>.
-      `),
-      b.p(`
-        The <code>header</code>, <code>body</code>, and <code>footer</code> parameters are all
-        optional.
       `),
       b.alert( 'warning', `
         <strong>Important:</strong> <code>b.modal()</code> is one of the few methods in Space Blocks which does not return
@@ -422,25 +404,13 @@ b.alert('dark', 'This is dark!' )` ),
       `),
 
       b.h3( 'Example' ),
-      b.code(`const header = b.modalHeader(
-  b.modalTitle( 'Modal <em>Title</em>' ),
-  b.modalCloseButton(),
-)
-
-const body = b.modalBody(
-  b.p('You opened the modal. <strong>Good job!</strong>'),
-);
-
-const footer = b.modalFooter(
-  b.button('secondary', 'Close', ()=>{ b.closeModal() }),
-);
-
-const button = b.button(
+      b.code(`b.button(
   'primary', 'Open Modal',
-  ()=>{ b.modal( {}, header, body, footer ) },
-)
-
-// Now return button as part of your room.`),
+  ()=>{ b.modal(
+    b.p('You opened the modal. <strong>Good job!</strong>'),
+    b.button( 'primary', 'OK', ()=>{ b.closeModal() } ),
+  ) },
+)`),
       this.demoBox( button ),
     );
   }

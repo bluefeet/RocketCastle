@@ -215,10 +215,8 @@ class SpaceBricks {
     return containerElement;
   }
 
-  modal (...stuff) {
+  modal (...children) {
     const b = this;
-
-    const options = (stuff.length && b.isPlainObject(stuff[0])) ? stuff.shift() : {};
 
     if (b.currentModalID) { throw 'A modal is already open' }
     const id = b.currentModalID = `modal-${b.uid}`;
@@ -233,53 +231,23 @@ class SpaceBricks {
     `);
 
     const contentElement = modalElement.querySelector('.modal-content');
-    stuff.forEach( child => contentElement.appendChild(child) );
-
-    if (b.currentModalLabelID) {
-      modalElement.setAttribute( 'aria-labelledby', b.currentModalLabelID );
-    }
-
+    const bodyElement = b.html('<div class="modal-body"></div>', ...children);
+    contentElement.appendChild( bodyElement );
     b.dom.body.appendChild( modalElement );
 
     const jq = $(`#${id}`);
-    jq.modal();
+    jq.modal({
+      keyboard: false,
+      backdrop: 'static',
+    });
+
     jq.on( 'hidden.bs.modal', ()=>{
-      delete this.currentModalID;
-      delete this.currentModalLabelID;
       jq.modal('dispose');
       b.dom.body.removeChild( modalElement );
+      delete this.currentModalID;
     });
 
     // No return as this method actively modifies the document.
-  }
-
-  modalHeader (...children) {
-    return this.html(`<div class="modal-header"></div>`, ...children);
-  }
-
-  modalBody (...children) {
-    return this.html(`<div class="modal-body"></div>`, ...children);
-  }
-
-  modalFooter (...children) {
-    return this.html(`<div class="modal-footer"></div>`, ...children);
-  }
-
-  modalTitle (html='') {
-    const b = this;
-
-    if (b.currentModalLabelID) { throw 'You can only have one modal title' }
-    const id = b.currentModalLabelID = `modal-label-${b.uid}`;
-
-    return b.html( `<h5 class="modal-title" id="${id}"></h5>`, html );
-  }      
-
-  modalCloseButton () {
-    return this.html(`
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    `);
   }
 
   closeModal () {
