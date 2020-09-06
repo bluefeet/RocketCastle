@@ -22,7 +22,7 @@ class Demo extends RocketCastle {
 
     const contents = [
       this.htmlDemo,
-      this.scrollDemo,
+      this.cloneDemo,
       this.h1Demo,
       this.h2Demo,
       this.h3Demo,
@@ -76,18 +76,16 @@ class Demo extends RocketCastle {
     );
   }
 
-  get scrollDemo () {
+  get cloneDemo () {
     const b = this.bricks;
     
     return b.div(
-      b.h2( 'scroll' ),
-      b.p(`
-        This clones an element from the DOM and returns it.
-      `),
-
+      b.h2('clone'),
+      b.p('This clones an element from the DOM and returns it.'),
+      b.p('There is a <code>'),
       b.h3( 'Example' ),
-      b.code( `b.scroll('scroll-demo')` ),
-      this.demoBox( b.scroll('scroll-demo') ),
+      b.code( `b.clone('#clone-demo')` ),
+      this.demoBox( b.clone('#clone-demo') ),
     );
   }
 

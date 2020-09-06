@@ -50,8 +50,8 @@ class SpaceBricks {
     return object instanceof Object && object.constructor === Object;
   }
 
-  scroll (id) {
-    return this.find( id ).cloneNode( true );
+  clone (selector) {
+    return this.dom.body.querySelector( selector ).cloneNode( true );
   }
 
   /* Basic Elements */
