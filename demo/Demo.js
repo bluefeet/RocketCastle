@@ -382,29 +382,29 @@ b.alert('dark', 'This is dark!' )` ),
 
     const button = b.button(
       'primary', 'Open Modal',
-      ()=>{ b.modal(
+      ()=>{ b.openModal(
         b.p('You opened the modal. <strong>Good job!</strong>'),
         b.button( 'primary', 'OK', ()=>{ b.closeModal() } ),
       ) },
     )
 
     return b.div(
-      b.h2( 'modal' ),
+      b.h2( 'openModal' ),
       b.p(`
         This creates a simplified
         <a href="https://getbootstrap.com/docs/4.5/components/modal/">Bootstrap modal component</a>
         and inserts it into the page, displays it, and then when it closes, destroys it.
       `),
       b.alert( 'warning', `
-        <strong>Important:</strong> <code>b.modal()</code> is one of the few methods in Space Blocks which does not return
-        an HTML element.  Instead, when it is called the modal is immediately displayed and the
-        code after the modal continues to run.
+        <strong>Important:</strong> <code>b.openModal()</code> is one of the few methods in Space
+        Blocks which does not return an HTML element.  Instead, when it is called the modal is
+        immediately displayed and the code after the modal continues to run.
       `),
 
       b.h3( 'Example' ),
       b.code(`b.button(
   'primary', 'Open Modal',
-  ()=>{ b.modal(
+  ()=>{ b.openModal(
     b.p('You opened the modal. <strong>Good job!</strong>'),
     b.button( 'primary', 'OK', ()=>{ b.closeModal() } ),
   ) },

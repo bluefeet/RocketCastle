@@ -215,7 +215,7 @@ class SpaceBricks {
     return containerElement;
   }
 
-  modal (...children) {
+  openModal (...children) {
     const b = this;
 
     if (b.currentModalID) { throw 'A modal is already open' }
