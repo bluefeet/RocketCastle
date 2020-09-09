@@ -13,3 +13,12 @@ pre {
 #space-scrolls {
   display: none;
 } 
+
+.btn {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.btn-group .btn {
+  margin-bottom: 0;
+}
