@@ -18,8 +18,8 @@ class SpaceBricks {
       return `spacebricks-uid-${id}`;
   }
 
-  find (id) {
-    return this.dom.getElementById( id );
+  find (selector) {
+    return this.dom.body.querySelector( selector );
   }
 
   html (first, ...children) {
@@ -51,7 +51,7 @@ class SpaceBricks {
   }
 
   clone (selector) {
-    return this.dom.body.querySelector( selector ).cloneNode( true );
+    return this.find( selector ).cloneNode( true );
   }
 
   /* Basic Elements */
@@ -253,6 +253,62 @@ class SpaceBricks {
   closeModal () {
     if (!this.currentModalID) { throw 'There is no modal to close' }
     $(`#${this.currentModalID}`).modal('hide');
+  }
+
+  tabs (titles, ...panels) {
+    if (titles.length !== panels.length) {
+      throw 'The number of titles and panels is not equal';
+    }
+
+    const b = this;
+
+    const uids = [];
+
+    const navElement = b.html('<nav><div class="nav nav-pills" role="tablist"></div></nav>');
+    const titlesElement = navElement.firstChild;
+    
+    let isFirstTitle = true;
+    titles.forEach( title => {
+      const uid = b.uid;
+      uids.push( uid );
+      const element = b.html(
+        `<a class="nav-link" id="nav-${uid}" data-toggle="pill" href="#panel-${uid}" role="tab" aria-controls="panel-${uid}"></a>`,
+        title,
+      );
+      if (isFirstTitle) {
+        element.classList.add('active');
+        element.setAttribute( 'aria-selected', 'true' );
+        isFirstTitle = false;
+      }
+      else {
+        element.setAttribute( 'aria-selected', 'false' );
+      }
+      titlesElement.appendChild( element );
+    });
+
+    const contentElement = b.html('<div class="tab-content"></div>');
+
+    let isFirstPanel = true;
+    panels.forEach( panel => {
+      const uid = uids.shift();
+      const element = b.html(
+        `<div class="tab-pane fade" id="panel-${uid}" role="tabpanel" aria-labelledby="nav-${uid}"></div>`,
+        panel,
+      );
+      if (isFirstPanel) {
+        element.classList.add('show', 'active');
+        isFirstPanel = false;
+      }
+      if (element.lastChild && element.lastChild.classList) {
+        element.lastChild.classList.add( 'mb-0' );
+      }
+      contentElement.appendChild( element );
+    });
+
+    return b.div(
+      navElement,
+      contentElement,
+    );
   }
 
 }

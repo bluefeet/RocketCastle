@@ -27,7 +27,7 @@ class RocketCastle {
 
   refresh () {
     // Remove the current room from the DOM.
-    const containerElement = this.bricks.find( 'room-container' );
+    const containerElement = this.bricks.find( '#room-container' );
     this.bricks.empty( containerElement );
 
     // Add the new room to the DOM.

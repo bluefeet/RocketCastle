@@ -1,3 +1,13 @@
+h1, h2, h3 { margin: 2rem 0 1rem 0 }
+
+h1 { font-size: 4rem }
+h2 { font-size: 3rem }
+h3 { font-size: 2rem }
+
+hr { margin: 2rem 0 }
+
+dd { margin-left: 1rem }
+
 #legal {
   color: #aaa;
   font-size: 0.7rem;
@@ -7,12 +17,8 @@
 pre {
   border-left: solid 0.4rem #5483a1;
   background-color: rgb(241, 241, 241);
-  padding: 0.4rem;
+  padding: 1rem;
 }
-
-#space-scrolls {
-  display: none;
-} 
 
 .btn {
   display: block;
@@ -21,4 +27,12 @@ pre {
 
 .btn-group .btn {
   margin-bottom: 0;
+}
+
+.nav-pills {
+  margin-bottom: 1rem;
+}
+
+p {
+  margin-bottom: 1rem 0;
 }
