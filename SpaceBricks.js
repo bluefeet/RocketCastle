@@ -23,21 +23,20 @@ class SpaceBricks {
   }
 
   html (first, ...children) {
-    let stuff = [first, ...children];
-    
-    const elements = [];
-    stuff.forEach( thing => {
-      if (typeof thing === 'string') {
-        const fragment = this.dom.createRange().createContextualFragment( thing.trim() );
-        elements.push( ...fragment.childNodes )
-      }
-      else elements.push( thing );
-    });
+    if (typeof first === 'string') {
+      first = this.dom.createRange().createContextualFragment( first );
+      if (first.firstElementChild) first = first.firstElementChild;
+    }
+    if (!first) throw 'The first argument must be a single element (string or object)';
 
-    const element = elements.shift();
-    elements.forEach( child => element.appendChild(child) );
+    if (first.appendChild) {
+      children.forEach( child => {
+        if (typeof child === 'string') child = this.dom.createRange().createContextualFragment( child );
+        first.appendChild( child );
+      })
+    }
 
-    return element;
+    return first;
   }
 
   empty (element) {
