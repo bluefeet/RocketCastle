@@ -1,0 +1,16 @@
+@media (prefers-color-scheme: dark) {
+  :root {
+    --rc-background-color: #111;
+    --rc-faded-background-color: #333;
+    --rc-faded-color: #ddd;
+    --rc-color: #eee;
+
+    --rc-inline-code-color: #f7abce;
+    --rc-a-color: rgb(86, 158, 241);
+    --rc-a-hover-color: rgb(179, 212, 250);
+    }
+
+  body {
+    font-weight: 300;
+  }
+}

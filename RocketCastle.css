@@ -1,23 +1,79 @@
+:root {
+  --rc-color: #000;
+  --rc-faded-color: #666;
+  --rc-faded-background-color: #ddd;
+  --rc-background-color: #fff;
+
+  --font-family-sans-serif: font-family: 'Roboto', sans-serif;
+  --font-family-monospace: font-family: 'Roboto Mono', monospace;
+
+  --rc-header-color: var(--rc-color);
+  --rc-h1-color: var(--rc-header-color);
+  --rc-h2-color: var(--rc-header-color);
+  --rc-h3-color: var(--rc-header-color);
+  --rc-hr-color: var(--rc-faded-background-color);
+  --rc-inline-code-color: #e83e8c;
+  --rc-block-code-color: var(--rc-color);
+  --rc-block-code-background-color: var(--rc-faded-background-color);
+  --rc-a-color: rgb(0, 97, 207);
+  --rc-a-hover-color: rgb(0, 68, 146);
+
+  --rc-danger-color: #dc3545;
+  --rc-info-color: #17a2b8;
+  --rc-primary-color: #007bff;
+  --rc-secondary-color: #6c757d;
+  --rc-success-color: #28a745;
+  --rc-warning-color: #ffc107;
+
+  /* Port the above back into Bootstrap. */
+  --danger: var(--rc-danger-color);
+  --info: var(--rc-info-color);
+  --primary: var(--rc-primary-color);
+  --secondary: var(--rc-secondary-color);
+  --success: var(--rc-success-color);
+  --warning: var(--rc-warning-color);
+}
+
+/*
+--rc-danger-fg-color: 
+--rc-danger-bg-color: 
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+*/
+
+body {
+  background-color: var(--rc-background-color);
+  color: var(--rc-color);
+}
+
+a { color: var(--rc-a-color) }
+a:hover { color: var(--rc-a-hover-color) }
+
 h1, h2, h3 { margin: 2rem 0 1rem 0 }
 
-h1 { font-size: 4rem }
-h2 { font-size: 3rem }
-h3 { font-size: 2rem }
+h1 { font-size: 4rem; color:var(--rc-h1-color) }
+h2 { font-size: 3rem; color:var(--rc-h2-color) }
+h3 { font-size: 2rem; color:var(--rc-h3-color) }
 
-hr { margin: 2rem 0 }
+hr { margin: 2rem 0; border-top:solid 0.4rem var(--rc-hr-color) }
+
+code { color: var(--rc-inline-code-color) }
+pre code { color: var(--rc-block-code-color) }
+pre {
+  background-color: var(--rc-block-code-background-color);
+  padding: 1rem;
+}
 
 dd { margin-left: 1rem }
 
 #legal {
-  color: #aaa;
+  color: var(--faded-color);
   font-size: 0.7rem;
   margin: 1rem 0;
-}
-
-pre {
-  border-left: solid 0.4rem #5483a1;
-  background-color: rgb(241, 241, 241);
-  padding: 1rem;
 }
 
 .btn {
