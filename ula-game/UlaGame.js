@@ -16,7 +16,7 @@ class UlaGame extends RocketCastle {
     //return status;
   }*/
 
-  //SECTION 1 >>
+  
 
   get mainRoom () {
     const b = this.bricks;
@@ -28,15 +28,23 @@ class UlaGame extends RocketCastle {
     );
   }
 
+//SECTION 1 (the darkness) >>
+
   get darknessRoom () {//start
     const b = this.bricks;
 
     return b.div(
       b.h1( 'The Darkness' ),
-      b.p( 'Everything around you is dark nothing.  you hear a deep, resonating voice. It feels as if it’s coming from right in front of your temple "Welcome being. Everything around you is matter, consisting of purgatory.  The between world.  Would you like to stay here or come with me to the unknown?"'),
+      b.p( 'Everything around you is dark nothing.  you hear a deep, resonating voice. It feels as if it’s coming from right in front of your nose "Welcome being. Everything around you is matter, consisting of purgatory.  The between world.  Would you like to stay here or come with me to the unknown?"'),
       b.button( 'primary', 'stay in the darkness', ()=>{ this.room='stay' } ),
       b.button( 'primary', 'continue into the unknown', ()=>{ this.room='unknown' } ),
-      b.button( 'primary', 'ask the voice what the unknown is', ()=>{ this.room='voice' } ),
+      b.button(
+        'primary', 'ask the voice what the unknown is',
+        ()=>{ b.openModal(
+          b.p('With an annoyed tone the voice responds. “You mortals always want to know more than you need.  The Unknown does not exist until we get there. The Unknown is both a figment of the personal imagination and an unchanging home for us immortals.  Now, have you made a choice or not?”'),
+          b.button( 'primary', 'OK', ()=>{ b.closeModal() } ),
+        ) },
+      ),
     );
   }
 
@@ -45,7 +53,7 @@ class UlaGame extends RocketCastle {
 
     return b.div(
       b.h1( 'The Darkness' ),
-      b.p( 'The voice sighs  “As you wish, naive mortal.” You can feel the voice’s presents fading away.'),
+      b.p( 'The voice sighs “As you wish, naive mortal.” You can feel the voice\'s presents fading away.'),
       b.button( 'primary', 'change your mind. “Wait!”', ()=>{ this.room='wait' } ),
       b.button( 'primary', 'stay in the darkness', ()=>{ this.room='stay2' } ),
     );
@@ -70,6 +78,10 @@ class UlaGame extends RocketCastle {
     );
   }
 
+  
+
+ //SECTION 2 (the unknown) >>>
+
   get unknownRoom () {//darknessRoom
     const b = this.bricks;
 
@@ -87,10 +99,22 @@ class UlaGame extends RocketCastle {
     return b.div(
       b.h1( 'The Cliff' ),
       b.p( 'You are standing on a rocky cliff. You cant see anything past it but fog with indiscernible shapes appearing and disappearing.'),
-      b.button( 'primary', 'look up', ()=>{ this.room='lookUp' } ),
-      b.button( 'primary', 'look to your right', ()=>{ this.room='lookRight' } ),
-      b.button( 'primary', 'look to your left', ()=>{ this.room='lookLeft' } ),
-      b.button( 'primary', 'look behind you', ()=>{ this.room='lookBehind' } ),
+      b.button(
+        'primary', 'look up',
+        ()=>{ b.openModal(
+          b.p('Far, far up is... More darkness. But this time you can barely make out some shapes. You can see your reflection above you in the shiny black darkness. Is it polished stone? Glass? Maybe even water?'),
+          b.button( 'primary', 'OK', ()=>{ b.closeModal() } ),
+        ) },
+      ),
+      b.button(
+        'primary', 'look to your right',
+        ()=>{ b.openModal(
+          b.p('The cliff continues until it fades into the fog.'),
+          b.button( 'primary', 'OK', ()=>{ b.closeModal() } ),
+        ) },
+      ),
+      b.button( 'primary', 'walk to your left', ()=>{ this.room='lookLeft' } ),
+      b.button( 'primary', 'walk behind', ()=>{ this.room='lookBehind' } ),
     );
   }
 
@@ -99,50 +123,26 @@ class UlaGame extends RocketCastle {
 
     return b.div(
       b.h1( 'The Cliff' ),
-      b.p( 'You hear the voice, but it doesnt feel like it’s coming from in front of your temple anymore. “open your eyes you insolent-!” You feel a painful flick on your forehead. The sensation forces your eyes open. You are standing on a rocky cliff. You cant see anything past it exept fog with indiscernible shapes appearing and disappearing.'),
-      b.button( 'primary', 'look up', ()=>{ this.room='lookUp' } ),
-      b.button( 'primary', 'look to your right', ()=>{ this.room='lookRight' } ),
-      b.button( 'primary', 'look to your left', ()=>{ this.room='lookLeft' } ),
-      b.button( 'primary', 'look behind you', ()=>{ this.room='lookBehind' } ),
+      b.p( 'You hear the voice, but it doesnt feel like it’s coming from in front of your nose anymore. “open your eyes you insolent-!” You feel a painful flick on your forehead. The sensation forces your eyes open. You are standing on a rocky cliff. You cant see anything past it exept fog with indiscernible shapes appearing and disappearing.'),
+      b.button(
+        'primary', 'look up',
+        ()=>{ b.openModal(
+          b.p('Far, far up is... More darkness. But this time you can barely make out some shapes. You can see your reflection above you in the shiny black darkness. Is it polished stone? Glass? Maybe even water?'),
+          b.button( 'primary', 'OK', ()=>{ b.closeModal() } ),
+        ) },
+      ),
+      b.button(
+        'primary', 'look to your right',
+        ()=>{ b.openModal(
+          b.p('The cliff continues until it fades into the fog.'),
+          b.button( 'primary', 'OK', ()=>{ b.closeModal() } ),
+        ) },
+      ),
+      b.button( 'primary', 'walk to your left', ()=>{ this.room='lookLeft' } ),
+      b.button( 'primary', 'walk behind', ()=>{ this.room='lookBehind' } ),
     );
   }
 
-  get voiceRoom () {//darknessRoom
-    const b = this.bricks;
-
-    return b.div(
-      b.h1( 'The Darkness' ),
-      b.p( 'With an annoyed tone the voice responds. “You mortals always want to know more than you need.  The Unknown does not exist until we get there. The Unknown is both a figment of the personal imagination and an unchanging home for us immortals.  Now, have you made a choice or not?”' ),
-      b.button( 'primary', 'stay in the darkness', ()=>{ this.room='stay' } ),
-      b.button( 'primary', 'continue into the unknown', ()=>{ this.room='unknown' } ),
-    );
-  }
-
-  //SECTION 2 >>>
-
-  get lookUpRoom () {
-    const b = this.bricks;
-
-    return b.div(
-      b.h1( 'More darkness' ),
-      b.p( 'Far, far up is... More darkness. But this time you can barely make out some shapes. You can see your reflection above you in the shiny black darkness. Is it polished stone? Glass? Maybe even water?' ),
-      b.button( 'primary', 'look to your right', ()=>{ this.room='lookRight' } ),
-      b.button( 'primary', 'look to your left', ()=>{ this.room='lookLeft' } ),
-      b.button( 'primary', 'look behind you', ()=>{ this.room='lookBehind' } ),
-    );
-  }
-
-  get lookRightRoom () {
-    const b = this.bricks;
-
-    return b.div(
-      b.h1( 'More cliff' ),
-      b.p( 'The cliff continues until it fades into the fog.' ),
-      b.button( 'primary', 'look up', ()=>{ this.room='lookUp' } ),
-      b.button( 'primary', 'look to your left', ()=>{ this.room='lookLeft' } ),
-      b.button( 'primary', 'look behind you', ()=>{ this.room='lookBehind' } ),  
-    );
-  }
 
   get lookLeftRoom () {
     const b = this.bricks;
@@ -150,9 +150,21 @@ class UlaGame extends RocketCastle {
     return b.div(
       b.h1( 'The Voice' ),
       b.p( 'You see a being the height of an extraordinarily tall human dressed in a white cloak with a hood. The cloak draps all the way down to the ground, covering almost all of their body. All that you can see is their hands and a face, but their flesh is made of thick black mist forming around the bone.' ),
-      b.button( 'primary', 'look up', ()=>{ this.room='lookUp' } ),
-      b.button( 'primary', 'look to your right', ()=>{ this.room='lookRight' } ),
-      b.button( 'primary', 'look behind you', ()=>{ this.room='lookBehind' } ), 
+      b.button(
+        'primary', 'look up',
+        ()=>{ b.openModal(
+          b.p('Far, far up is... More darkness. But this time you can barely make out some shapes. You can see your reflection above you in the shiny black darkness. Is it polished stone? Glass? Maybe even water?'),
+          b.button( 'primary', 'OK', ()=>{ b.closeModal() } ),
+        ) },
+      ),
+      b.button(
+        'primary', 'look to your right',
+        ()=>{ b.openModal(
+          b.p('The cliff continues until it fades into the fog.'),
+          b.button( 'primary', 'OK', ()=>{ b.closeModal() } ),
+        ) },
+      ),
+      b.button( 'primary', 'walk behind', ()=>{ this.room='lookBehind' } ), 
       b.button( 'primary', 'ask them where you are', ()=>{ this.room='askVoiceWhere' } ),
       b.button( 'primary', 'ask them what they are', ()=>{ this.room='whatIsVoice' } ),
       b.button( 'primary', 'reach for their hand to see if your hand goes through the misty flesh', ()=>{ this.room='mistyHand' } ), 
@@ -172,9 +184,33 @@ class UlaGame extends RocketCastle {
           b.button( 'primary', 'OK', ()=>{ b.closeModal() } ),
         ) },
       ),
-      b.button( 'primary', 'look up', ()=>{ this.room='lookUp' } ),
-      b.button( 'primary', 'look to your right', ()=>{ this.room='lookRight' } ),
-      b.button( 'primary', 'look to your left', ()=>{ this.room='lookLeft' } ),  
+      b.button(
+        'primary', 'look up',
+        ()=>{ b.openModal(
+          b.p('Far, far up is... More darkness. But this time you can barely make out some shapes. You can see your reflection above you in the shiny black darkness. Is it polished stone? Glass? Maybe even water?'),
+          b.button( 'primary', 'OK', ()=>{ b.closeModal() } ),
+        ) },
+      ),
+      b.button(
+        'primary', 'look to your right',
+        ()=>{ b.openModal(
+          b.p('The cliff continues until it fades into the fog.'),
+          b.button( 'primary', 'OK', ()=>{ b.closeModal() } ),
+        ) },
+      ),
+      b.button( 'primary', 'walk to your left', ()=>{ this.room='lookLeft' } ),  
+    );
+  }
+
+  get askVoiceWhereRoom () {
+    const b = this.bricks;
+
+    return b.div(
+      b.h1( 'where are we?' ),
+      b.p( 'This is the unknown, as simple as that.  Now, Are you ready to continue on?' ),
+      b.button( 'primary', '', ()=>{ this.room='' } ),
+      b.button( 'primary', '', ()=>{ this.room='' } ),
+      b.button( 'primary', '', ()=>{ this.room='' } ),
     );
   }
 
