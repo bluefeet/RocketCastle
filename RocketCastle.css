@@ -1,23 +1,79 @@
+body {
+  --color: #000;
+  --faded-color: #666;
+  --faded-background-color: #ddd;
+  --background-color: #fff;
+
+  --font-family-sans-serif: font-family: 'Roboto', sans-serif;
+  --font-family-monospace: font-family: 'Roboto Mono', monospace;
+  --font-weight: 400;
+
+  --header-color: var(--color);
+  --h1-color: var(--header-color);
+  --h2-color: var(--header-color);
+  --h3-color: var(--header-color);
+
+  --hr-color: var(--faded-background-color);
+
+  --inline-code-color: #e83e8c;
+  --block-code-color: var(--color);
+  --pre-background-color: var(--faded-background-color);
+
+  --a-color: rgb(0, 97, 207);
+  --a-hover-color: rgb(0, 68, 146);
+
+  --button-color: #fff;
+  --button-background-color: #007bff;
+
+}
+
+@media (prefers-color-scheme: dark) {
+  body.auto-dark-mode {
+    --background-color: #111;
+    --faded-background-color: #333;
+    --faded-color: #ddd;
+    --color: #eee;
+
+    --font-weight: 300;
+
+    --inline-code-color: #f7abce;
+    --a-color: rgb(86, 158, 241);
+    --a-hover-color: rgb(179, 212, 250);
+  }
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--color);
+  font-weight: var(--font-weight);
+  font-family: var(--font-family-sans-serif);
+}
+
+a { color: var(--a-color) }
+a:hover { color: var(--a-hover-color) }
+a:visited { color: var(--a-visited-color) }
+
 h1, h2, h3 { margin: 2rem 0 1rem 0 }
 
-h1 { font-size: 4rem }
-h2 { font-size: 3rem }
-h3 { font-size: 2rem }
+h1 { font-size: 4rem; color:var(--h1-color) }
+h2 { font-size: 3rem; color:var(--h2-color) }
+h3 { font-size: 2rem; color:var(--h3-color) }
 
-hr { margin: 2rem 0 }
+hr { margin: 2rem 0; border-top:solid 0.4rem var(--hr-color) }
+
+code { color: var(--inline-code-color) }
+pre code { color: var(--block-code-color) }
+pre {
+  background-color: var(--pre-background-color);
+  padding: 1rem;
+}
 
 dd { margin-left: 1rem }
 
 #legal {
-  color: #aaa;
+  color: var(--faded-color);
   font-size: 0.7rem;
   margin: 1rem 0;
-}
-
-pre {
-  border-left: solid 0.4rem #5483a1;
-  background-color: rgb(241, 241, 241);
-  padding: 1rem;
 }
 
 .btn {

@@ -27,14 +27,14 @@ class SpaceBricks {
       first = this.dom.createRange().createContextualFragment( first );
       if (first.firstElementChild) first = first.firstElementChild;
     }
-    if (!first) throw 'The first argument must be a single element (string or object)';
 
-    if (first.appendChild) {
-      children.forEach( child => {
-        if (typeof child === 'string') child = this.dom.createRange().createContextualFragment( child );
-        first.appendChild( child );
-      })
-    }
+    if (!first) throw 'The first argument must be a single element (string or object)';
+    if (children.length && !first.appendChild) throw 'The first HTML does not contain an element to append children to';
+
+    children.forEach( child => {
+      if (typeof child === 'string') child = this.dom.createRange().createContextualFragment( child );
+      first.appendChild( child );
+    })
 
     return first;
   }

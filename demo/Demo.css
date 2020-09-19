@@ -1,8 +1,11 @@
 /* https://www.pexels.com/ */
 
-h1 { color: rgb(95, 48, 182) }
-h2 { color: rgb(58, 61, 223) }
-h3 { color: #777 }
+body {
+  --h1-color: rgb(95, 48, 182);
+  --h2-color: rgb(58, 61, 223);
+  --h3-color: #777;
+  --hr-color: #a8d1c0;
+}
 
 #room-container {
   padding-top: 1rem;
@@ -14,10 +17,23 @@ h3 { color: #777 }
   margin: 1rem 0;
 }
 
-hr {
-  border-top: solid 0.4rem #a8d1c0;
+pre {
+  border-left: solid 0.4rem #5483a1;
 }
 
 hr:first-of-type {
   margin-top: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    --h1-color: rgb(162, 134, 214);
+    --h2-color: rgb(138, 139, 228);
+    --h3-color: rgb(167, 167, 167);
+    --hr-color: #4fce99;
+  }
+
+  .demo-box {
+    border-color: #2a79ad;
+  }
 }
