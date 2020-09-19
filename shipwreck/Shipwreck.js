@@ -4,16 +4,295 @@
   https://rocketcastle.com
 */
 
-class Shipwreck extends RocketCastle {
-  init () {
-    this.player.day = 0;
+const actions = {
+  get forageAction () {
 
-    // The player starts with between 2 and 4 health.
-    this.player.health = this.rand(2,4);
+  },
+    time: 8,
+    energy: 10,
+    loot: {
+      branch: 
+      stick: 
+      stone: 
+    }
+  },
 
-    // Start all resources at zero.
-    this.resources.forEach( resource => this.player[resource] = 0 )
+  fellTree: {
+    time: 4,
+    energy: 20,
+    loot: {
+      bark: 1,
+    },
   }
+};
+
+const items = {
+
+  // BASICS
+
+  bark: {},
+  branch: {},
+  fiber: {},
+  log: {},
+  stick: {},
+  stone: {},
+
+  berry: {
+    energy: 1,
+    hydration: 0.5,
+    expires: 24,
+  },
+
+  mushroom: {
+    energy: 1,
+    expires: 48,
+  },
+
+  bug: {
+    health: 1,
+    expires: 24,
+  },
+
+  tuber: {
+    energy: 3,
+    health: 1,
+    expires: 7 * 24,
+  },
+
+  fish: {
+    energy: 5,
+    health: 5,
+  },
+
+  bone: {},
+  skin: {},
+
+  fat: {
+    energy: 4,
+    expires: 48,
+  },
+
+  meat: {
+    health: 4,
+    expires: 24,
+  },
+
+  // COOKED STUFF
+
+  cookedMushroom: {
+    energy: 1,
+    expires: 4,
+    recipe: {
+      time: 0.2,
+      fire: true,
+      mushroom: 1,
+    },
+  },
+
+  cookedBerry: {
+    energy: 1.5,
+    expires: 4,
+    recipe: {
+      time: 0.1,
+      fire: true,
+      berry: 1,
+    },
+  },
+
+  cookedBug: {
+    health: 2,
+    expires: 8,
+    recipe: {
+      time: 0.1,
+      fire: true,
+      bug: 1,
+    },
+  },
+
+  cookedTuber: {
+    energy: 6,
+    health: 1,
+    expires: 24,
+    recipe: {
+      time: 0.5,
+      fire: true,
+      tuber: 1,
+    },
+  },
+
+  cookedFish: {
+    energy: 8,
+    health: 8,
+    recipe: {
+      time: 0.25,
+      fire: true,
+      fish: 1,
+    }
+  },
+
+  cookedMeat: {
+    energy: 4,
+    health: 8,
+    expires: 8,
+    recipe: {
+      time: 0.3,
+      fire: true,
+      meat: 1,
+    },
+  },
+
+  smokedMeat: {
+    energy: 3,
+    health: 7,
+    expires: 48,
+    recipe: {
+      time: 0.3,
+
+    }
+  }
+
+  meatStew: {
+    energy: 40,
+    health: 40,
+    hydration: 20,
+    recipe: {
+      time: 3,
+      fire: true,
+      pot: true,
+      tuber: 3,
+      meat: 2,
+      bone: 1,
+      water: 25,
+    },
+  },
+
+  veggieStew: {
+    energy: 30,
+    hydration: 20,
+    recipe: {
+      time: 3,
+      fire: true,
+      pot: true,
+      tuber: 3,
+      mushroom: 2,
+      water: 25,
+    },
+  },
+
+  emptyWaterskin: {
+    recipe: {
+      time: 4,
+      fiber: 3,
+      skin: 3,
+      fat: 1,
+    },
+  },
+
+  fullWaterSkin: {
+    water: true,
+    hydration: 20,
+  },
+
+
+  club: {
+    weapon: true,
+    melee: true,
+    recipe: {
+      time: 1,
+      branch: 1,
+      stone: 1,
+    },
+  },
+
+  spear: {
+    weapon: true,
+    ranged: true,
+    fishing: true,
+    hunting: true,
+    recipe: {
+      time: 2,
+      branch: 1,
+      stick: 2,
+      fiber: 2,
+    },
+  },
+
+  axe: {
+    weapon: true,
+    melee: true,
+    recipe: {
+      time: 3,
+      branch: 1,
+      fiber: 4,
+      stone: 1,
+    },
+  },
+
+  fishingPole: {
+    fishing: true,
+    fishingRate: 2,
+    recipe: {
+      time: 6,
+      branch: 1,
+      fiber: 3,
+    }
+  },
+
+  leanTo: {
+    recipe: {
+      time: 8,
+      fiber: 6,
+      branch: 20,
+    },
+  },
+
+  basket: {
+    time: 8,
+    fiber: 4,
+    stick: 2,
+  },
+
+  campfire: {
+    time: 1,
+    branch: 10,
+    fiber: 1,
+  },
+
+  fireplace: {
+    branch: 5,
+    fiber: 1,
+    stone: 10,
+  },
+};
+class Shipwreck extends RocketCastle {
+
+  init () {
+    const player = this.player;
+
+    player.day = 1;
+    player.time = this.rand( 0, 23 ) + Math.random();
+
+    // 0 = empty, 100 = full.
+    player.energy = this.rand( 20, 100 ); // Fat and carbs.
+    player.health = this.rand( 20, 100 ); // Protein.
+    player.sanity = this.rand( 20, 100 );
+
+    player.inventory = {};
+  }
+
+  get mainRoom () {
+    const b = this.bricks;
+    return b.div();
+  }
+
+
+
+
+
+/*
+
+
+
 
   get rescueDay () {
     return 6;
@@ -277,4 +556,6 @@ class Shipwreck extends RocketCastle {
       b.button( 'link', 'Try again.', ()=>{ this.reset() } ),
     );
   }
+*/
+
 }
