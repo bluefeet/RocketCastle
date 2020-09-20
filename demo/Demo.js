@@ -10,8 +10,8 @@ class Demo extends RocketCastle {
     let boxElement = this.bricks.html( '<div class="demo-box"></div>', ...children );
 
     // Removing the top and bottom margins from the first and last elements. Makes for a clean layout.
-    if (boxElement.firstChild && boxElement.firstChild.classList) boxElement.firstChild.classList.add( 'mt-0' );
-    if (boxElement.lastChild && boxElement.lastChild.classList) boxElement.lastChild.classList.add( 'mb-0' );
+    if (boxElement?.firstChild.classList) boxElement.firstChild.classList.add( 'mt-0' );
+    if (boxElement?.lastChild.classList) boxElement.lastChild.classList.add( 'mb-0' );
 
     return boxElement;
   }
@@ -29,7 +29,6 @@ class Demo extends RocketCastle {
       this.pDemo,
       this.hrDemo,
       this.imgDemo,
-      this.thumbnailDemo,
       this.blockquoteDemo,
       this.codeDemo,
       this.buttonDemo,
@@ -137,16 +136,6 @@ class Demo extends RocketCastle {
       b.h2( 'img' ),
       b.code( `b.img( 'pexels-abdullah-ghatasheh-1631677.jpg' )` ),
       this.demoBox( b.img( 'pexels-abdullah-ghatasheh-1631677.jpg' ) ),
-    );
-  }
-
-  get thumbnailDemo () {
-    const b = this.bricks;
-    
-    return b.div(
-      b.h2( 'thumbnail' ),
-      b.code( "b.thumbnail( 'pexels-abdullah-ghatasheh-1631677.jpg' )" ),
-      this.demoBox( b.thumbnail( 'pexels-abdullah-ghatasheh-1631677.jpg' ) ),
     );
   }
 
