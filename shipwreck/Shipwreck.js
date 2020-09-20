@@ -75,7 +75,7 @@ class Shipwreck extends RocketCastle {
       b.h1( 'Shipwreck' ),
       b.p( 'Survive for as long as you can.' ),
       b.buttonGroup(
-        b.button( 'link', 'Start.', ()=>{ this.room='beach' } ),
+        b.button( 'primary', 'Start.', ()=>{ this.room='beach' } ),
       ),
     );
   }
@@ -101,8 +101,8 @@ class Shipwreck extends RocketCastle {
       ...details.map( detail => b.p(detail) ),
       b.p( 'What would you like to do today?' ),
       b.buttonGroup(
-        b.button( 'link', 'Forage.', ()=>{ this.room='forage' } ),
-        b.button( 'link', 'Rest.', ()=>{ this.room='rest' } ),
+        b.button( 'primary', 'Forage.', ()=>{ this.room='forage' } ),
+        b.button( 'primary', 'Rest.', ()=>{ this.room='rest' } ),
       ),
     );
   }
@@ -153,7 +153,7 @@ class Shipwreck extends RocketCastle {
       b.h1( 'Forage' ),
       ...details.map( detail => b.p(detail) ),
       b.buttonGroup(
-        ...options.map( option => b.button('link', ...option) ),
+        ...options.map( option => b.button('primary', ...option) ),
       ),
     );
   }
@@ -164,7 +164,7 @@ class Shipwreck extends RocketCastle {
     return b.div(
       b.h1( 'Rest' ),
       b.p( 'You spent your day conserving energy.' ),
-      b.button( 'link', 'Prepare for the night.', ()=>{ this.room='dusk' } ),
+      b.button( 'primary', 'Prepare for the night.', ()=>{ this.room='dusk' } ),
     );
   }
 
@@ -217,7 +217,7 @@ class Shipwreck extends RocketCastle {
       ...this.playerDetails.map( detail => b.p(detail) ),
       b.p( 'What would you like to do?' ),
       b.buttonGroup(
-        ...options.map( option => b.button('link', ...option) ),
+        ...options.map( option => b.button('primary', ...option) ),
       ),
     );
   }
@@ -263,7 +263,7 @@ class Shipwreck extends RocketCastle {
       b.h1( 'Night' ),
       ...details.map( detail => b.p(detail) ),
       b.buttonGroup(
-        ...options.map( option => b.button('link', ...option) ),
+        ...options.map( option => b.button('primary', ...option) ),
       ),
     );
   }
@@ -274,7 +274,7 @@ class Shipwreck extends RocketCastle {
     return b.div(
       b.h1( 'Rescue' ),
       b.p( 'You made it!' ),
-      b.button( 'link', 'Try again.', ()=>{ this.reset() } ),
+      b.button( 'primary', 'Try again.', ()=>{ this.reset() } ),
     );
   }
 }

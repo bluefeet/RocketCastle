@@ -1,1 +1,17 @@
 /* https://www.pexels.com/ */
+
+body {
+  color: #eee;
+  background-color: rgb(209, 255, 246);
+  background-image: url(pexels-george-desipris-2056194.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+h1 {
+  color: hsla(127, 62%, 84%, 0.664);
+}
+
+#legal {
+  color: #ccc;
+}
