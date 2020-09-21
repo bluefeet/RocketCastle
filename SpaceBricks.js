@@ -7,7 +7,8 @@
 class SpaceBricks {
 
   constructor (dom) {
-    this.dom = dom || window.document;
+    this.dom = dom || window?.document;
+    if (!dom) throw 'Unable to access window.document';
   }
 
   /* Utility Methods */
@@ -71,33 +72,16 @@ class SpaceBricks {
     return element;
   }
 
-  thumbnail (src) {
-    const element = this.html( '<img class="img-thumbnail">' );
-    if (src) element.setAttribute( 'src', src );
-    return element;
-  }
-
   /* Typography Elements */
 
-  h1 (html='') {
-    return this.html( `<h1>${html}</h1>` );
-  }
+  h1 (...children) { return this.element( 'h1', ...children ) }
+  h2 (...children) { return this.element( 'h2', ...children ) }
+  h3 (...children) { return this.element( 'h3', ...children ) }
 
-  h2 (html='') {
-    return this.html( `<h2>${html}</h2>` );
-  }
+  p (...children) { return this.element( 'p', ...children ) }
+  lead (...children) { return this.html( `<p class="lead"></p>`, ...children ) }
 
-  h3 (html='') {
-    return this.html( `<h3>${html}</h3>` );
-  }
-
-  p (html='') {
-    return this.html( `<p>${html}</p>` );
-  }
-
-  hr () {
-    return this.element('hr');
-  }
+  hr () { return this.element('hr') }
 
   blockquote (quote='', cite) {
     const quoteElement = this.html( `<blockquote class="blockquote"></blockquote>` );
@@ -115,17 +99,9 @@ class SpaceBricks {
     return quoteElement;
   }
 
-  dl (...children) {
-    return this.element('dl', ...children);
-  }
-
-  dt (html) {
-    return this.element('dt', html);
-  }
-
-  dd (html) {
-    return this.element('dd', html);
-  }
+  dl (...children) { return this.element('dl', ...children) }
+  dt (...children) { return this.element('dt', ...children) }
+  dd (...children) { return this.element('dd', ...children) }
 
   code (text='') {
     const preElement = this.element( 'pre' );
