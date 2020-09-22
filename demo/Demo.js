@@ -27,6 +27,7 @@ class Demo extends RocketCastle {
       this.h2Demo,
       this.h3Demo,
       this.pDemo,
+      this.leadDemo,
       this.hrDemo,
       this.imgDemo,
       this.blockquoteDemo,
@@ -116,6 +117,16 @@ class Demo extends RocketCastle {
       b.h2( 'p' ),
       b.code( `b.p( 'A paragraph of text.' )` ),
       this.demoBox( b.p( 'A paragraph of text.' ) ),
+    );
+  }
+
+  get leadDemo () {
+    const b = this.bricks;
+    
+    return b.div(
+      b.h2( 'lead' ),
+      b.code( `b.lead( 'A leading paragraph of text.' )` ),
+      this.demoBox( b.lead( 'A leading paragraph of text.' ) ),
     );
   }
 

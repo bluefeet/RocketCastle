@@ -24,18 +24,15 @@ class SpaceBricks {
   }
 
   html (first, ...children) {
-    if (typeof first === 'string') {
+    if (typeof first === 'string')
       first = this.dom.createRange().createContextualFragment( first );
-      if (first.firstElementChild) first = first.firstElementChild;
-    }
 
-    if (!first) throw 'The first argument must be a single element (string or object)';
-    if (children.length && !first.appendChild) throw 'The first HTML does not contain an element to append children to';
+    const firstChild = first.firstElementChild || (first.tagName ? first : undefined);
 
-    children.forEach( child => {
+    if (firstChild) children.forEach( child => {
       if (typeof child === 'string') child = this.dom.createRange().createContextualFragment( child );
-      first.appendChild( child );
-    })
+      firstChild.appendChild( child );
+    });
 
     return first;
   }
@@ -43,7 +40,7 @@ class SpaceBricks {
   empty (element) {
     while (element.firstChild) {
       element.firstChild.remove();
-    }   
+    }
   }
 
   isPlainObject (object) {
