@@ -8,7 +8,7 @@ class SpaceBricks {
 
   constructor (dom) {
     this.dom = dom || window?.document;
-    if (!dom) throw 'Unable to access window.document';
+    if (!this.dom) throw 'Unable to access window.document';
   }
 
   /* Utility Methods */

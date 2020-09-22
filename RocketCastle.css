@@ -20,11 +20,11 @@ body {
   --pre-background-color: var(--faded-background-color);
 
   --a-color: rgb(0, 97, 207);
+  --a-visited-color: rgb(0, 97, 207);
   --a-hover-color: rgb(0, 68, 146);
 
   --button-color: #fff;
   --button-background-color: #007bff;
-
 }
 
 @media (prefers-color-scheme: dark) {
@@ -37,7 +37,9 @@ body {
     --font-weight: 300;
 
     --inline-code-color: #f7abce;
-    --a-color: rgb(86, 158, 241);
+
+    --a-color: rgb(128, 183, 247);
+    --a-visited-color: rgb(83, 150, 228);
     --a-hover-color: rgb(179, 212, 250);
   }
 }
