@@ -12,6 +12,9 @@ class RocketCastle {
 
   set room (key) {
     this.roomKey = key;
+    if (this.prevRoomKey) this.bricks.dom.body.classList.remove( `${this.prevRoomKey}Room` );
+    this.bricks.dom.body.classList.add( `${key}Room` );
+    this.prevRoomKey = key;
     this.refresh();
   }
 
