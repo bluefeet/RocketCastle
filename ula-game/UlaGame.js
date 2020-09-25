@@ -63,7 +63,7 @@ class UlaGame extends RocketCastle {
     const b = this.bricks;
 
     return b.div(
-      b.h1( 'The Darkness' ),
+      b.h1( '"Wait!"' ),
       b.p( 'The voice is back “Changed your mind? I see. As you wish, human.” You can hear a ting of minialcle excitement in it’s tone.'),
       b.button( 'primary', 'continue into the unknown', ()=>{ this.room='unknown' } ),
     );
@@ -149,28 +149,20 @@ class UlaGame extends RocketCastle {
 
     return b.div(
       b.h1( 'The Voice' ),
-      b.p( 'You see a being the height of an extraordinarily tall human dressed in a white cloak with a hood. The cloak draps all the way down to the ground, covering almost all of their body. All that you can see is their hands and a face, but their flesh is made of thick black mist forming around the bone.' ),
-      b.button(
-        'primary', 'look up',
-        ()=>{ b.openModal(
-          b.p('Far, far up is... More darkness. But this time you can barely make out some shapes. You can see your reflection above you in the shiny black darkness. Is it polished stone? Glass? Maybe even water?'),
-          b.button( 'primary', 'OK', ()=>{ b.closeModal() } ),
-        ) },
-      ),
-      b.button(
-        'primary', 'look to your right',
-        ()=>{ b.openModal(
-          b.p('The cliff continues until it fades into the fog.'),
-          b.button( 'primary', 'OK', ()=>{ b.closeModal() } ),
-        ) },
-      ),
+      b.p( 'You see a being the height of an extraordinarily tall human dressed in a white cloak with a hood. The cloak drapes all the way down to the ground, covering almost all of their body. All that you can see is their hands and a face, but their flesh is made of thick black mist forming around the bone.' ),
       b.button( 'primary', 'walk behind', ()=>{ this.room='lookBehind' } ), 
       b.button( 'primary', 'ask them where you are', ()=>{ this.room='askVoiceWhere' } ),
-      b.button( 'primary', 'ask them what they are', ()=>{ this.room='whatIsVoice' } ),
+      b.button(
+        'primary', 'what are you?',
+        ()=>{ b.openModal(
+          b.p('“*sigh* I am an immortal being and I am here to lead you on your way. if you must name me at all, you may use the name “Preth”."'),
+          b.button( 'primary', 'OK', ()=>{ b.closeModal() } ),
+        ) },
+      ),
       b.button( 'primary', 'reach for their hand to see if your hand goes through the misty flesh', ()=>{ this.room='mistyHand' } ), 
     );
   }
-
+  
   get lookBehindRoom () {
     const b = this.bricks;
 
@@ -208,12 +200,79 @@ class UlaGame extends RocketCastle {
     return b.div(
       b.h1( 'where are we?' ),
       b.p( 'This is the unknown, as simple as that.  Now, Are you ready to continue on?' ),
+      b.button( 'primary', '"yes, I think so."', ()=>{ this.room='yes' } ),
+      b.button( 'primary', 'n-no, I don\'t think so', ()=>{ this.room='stayCliff' } ),
+      b.button( 'primary', 'walk behind', ()=>{ this.room='lookBehind' } ),
+    );
+    
+  }
+  get yesRoom () {
+    const b = this.bricks;
+
+    return b.div(
+      b.h1( 'follow?' ),
+      b.p( '"follow me" they say as They turn away and start walking away along the cliff.' ),
+      b.button( 'primary', 'follow them.', ()=>{ this.room='follow' } ),
+      b.button( 'primary', 'stay exploring the cliff', ()=>{ this.room='stayCliff' } ),
+      b.button(
+        'primary', 'Ask them where their going.',
+        ()=>{ b.openModal(
+          b.p('They just keep walking.'),
+          b.button( 'primary', 'OK', ()=>{ b.closeModal() } ),
+        ) },
+      ),
+    );
+  }
+
+
+  get mistyHandRoom () {
+    const b = this.bricks;
+
+    return b.div(
+      b.h1( 'Reach' ),
+      b.p( 'They jerk their hand away before you can touch it. “DO YOU WANT ME TO ELIMINATE YOU?! If a mortal like you touches me they will incinerate on the spot. You humans know nothing.” They turn away and start walking away along the cliff. ' ),
+      b.button( 'primary', 'follow them.', ()=>{ this.room='follow' } ),
+      b.button(
+        'primary', 'Ask them where their going.',
+        ()=>{ b.openModal(
+          b.p('They just keep walking.'),
+          b.button( 'primary', 'OK', ()=>{ b.closeModal() } ),
+        ) },
+      ),
+    );
+  }
+  get stayCliffRoom () {
+    const b = this.bricks;
+
+    return b.div(
+      b.h1( 'You stayed' ),
+      b.p( 'as the voice\'s figure fads into the fog you can feel the cliff underneath your feet slowly dragging you under like quicksand until you are completely submerged, surrounded by...Darkness.' ),
+    );  
+  }
+
+  //SECTION 3 (into to trial) >>
+  get followRoom () {
+    const b = this.bricks;
+
+    return b.div(
+      b.h1( 'following' ),
+      b.p( '' ),
       b.button( 'primary', '', ()=>{ this.room='' } ),
       b.button( 'primary', '', ()=>{ this.room='' } ),
       b.button( 'primary', '', ()=>{ this.room='' } ),
     );
   }
+  get Room () {
+    const b = this.bricks;
 
+    return b.div(
+      b.h1( '' ),
+      b.p( '' ),
+      b.button( 'primary', '', ()=>{ this.room='' } ),
+      b.button( 'primary', '', ()=>{ this.room='' } ),
+      b.button( 'primary', '', ()=>{ this.room='' } ),
+    );
+  }
   /*get Room () {
     const b = this.bricks;
 
