@@ -139,7 +139,7 @@ class Shipwreck extends RocketCastle {
 
     if (player.health<=0) {
       player.health = 0;
-      if (!isHurt) { details.push([ 'You have starved to death.' ]) }
+      if (!isHurt) { details.push( 'You have starved to death.' ) }
       else { details.push( this.healthDetail ) }
       options.push([ 'Try again.', ()=>{ this.reset() } ]);
     }
