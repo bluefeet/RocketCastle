@@ -1,5 +1,5 @@
 
-# Contributor Covenant Code of Conduct
+# Rocket Castle Code of Conduct
 
 ## Our Pledge
 

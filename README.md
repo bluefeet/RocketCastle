@@ -1,37 +1,22 @@
 # 🚀🏰
 
-Welcome to Rocket Castle: a platform for people to create and play interactive, single-player, games and stories.
+Rocket Castle is a platform for anyone who wants to:
 
-Rocket Castle is currently just a couple hundred lines of JavaScript, CSS, and HTML. Nothing at all is formalized and everything has and will change.
+- Learn the fundamentals of web development: [JavaScript](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/What_is_JavaScript), [HTML](https://www.computerhope.com/jargon/h/html.htm), and [CSS](https://en.wikipedia.org/wiki/CSS).
+- Publish free games, gadgets, and stories on [rocketcastle.com](https://rocketcastle.com).
+- Collaborate in workplace-like environment with projects, meetings, and tickets.
+- Experiment with software development practices such as [Agile](https://www.agilealliance.org/agile101/the-agile-manifesto/) and [Lean](https://en.wikipedia.org/wiki/Lean_software_development).
 
-The primary goal of the project is to teach my kids programming using JavaScript.
+We are actively:
 
-# Anatomy of a Room
+- Building the [Space Bricks](https://rocketcastle.com/demo/) interactive story telling framework.
+- Learning from the [Get Coding!](https://www.amazon.com/Get-Coding-Learn-JavaScript-Website/dp/076369276X/) book series.
+- Meeting on a regular basis to present and geek out on cool new technologies and ideas.
 
-All Rocket Castle games start off in a single room which the player is expected to interact with.  A room, in its most technical form, is a dynamic, read-only, JavaScript property which uses [Space Bricks](#Space%20Bricks) to return [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) objects.
+To get involved join our [Discord server](https://discord.gg/TeSMCWD) and introduce yourself in the general text chat channel. And make sure to read and abide by our community's [code of conduct](CODE_OF_CONDUCT.md).
 
-```js
-get mainRoom () {
-  const b = this.bricks;
+If you are new to JavaScript / HTML / CSS then get a copy of the [Get Coding!](https://www.amazon.com/Get-Coding-Learn-JavaScript-Website/dp/076369276X/) book. There is also [Get Coding 2!](https://www.amazon.com/Coding-Build-Computer-Games-JavaScript/dp/1536205419/) for more advanced learners. We have a copy of each of these books which we are happy to loan out if nobody else is using them.
 
-  return b.div(
-    b.title( 'Some Big Thing' ),
-    b.p( 'Hello world this is a paragraph!' ),
-  );
-}
-```
+Rocket Castle is the brainchild of [Aran Deltac](https://bluefeet.dev/index.html), a coder of 30+ years and father of two amazing teenage daughters.
 
-# Space Bricks
-
-[SpaceBricks.js](https://github.com/bluefeet/RocketCastle/blob/master/SpaceBricks.js) provides a high-level and simplistic API for creating [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) objects specifically tailored to work with the [Bootstrap](https://getbootstrap.com/) front-end framework. Generating content for a Rocket Castle room is done entirely using Space Bricks.
-
-See the [demo game](https://rocketcastle.com/demo/) for examples of all the available bricks.
-
-# Ideas
-
-- More bricks!
-- Create a guide that can take a kid from zero to a game.
-- Create base themes like `dungeon`, `forest`, `space`, etc.
-- Handle dark/light modes as a base set of CSS games can pick from. [This article](https://css-tricks.com/dark-modes-with-css/) talks about some important styling points on dark sites.
-- Formalize a way to create mixins to add, for example, game mechanics or new UI elements.
-- Loot tables? Encounter tables?
+Happy coding!
